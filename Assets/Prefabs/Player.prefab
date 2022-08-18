@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 532849430409500707}
   - component: {fileID: 532849430409500704}
   - component: {fileID: 2878010049077981439}
-  - component: {fileID: 7645767884235194172}
   - component: {fileID: 7284787553536981952}
   m_Layer: 0
   m_Name: Player
@@ -204,18 +203,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7645767884235194172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532849430409500710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14706eb6f88e22e49859f5a62cc28d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7284787553536981952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,4 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805e8e54a6e809f4eb31fc7e6609d18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transform: {fileID: 0}
+  rb: {fileID: 0}
   speed: 0
+  gravity: 9.81
+  jumpHeight: 3

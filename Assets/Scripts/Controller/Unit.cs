@@ -35,6 +35,8 @@ namespace FPS_Game
         }
 
         public abstract void Move(Vector2 input);
+
+        public abstract void Jump();
     }
 }
 
