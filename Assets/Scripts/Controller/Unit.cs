@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public abstract class Unit : MonoBehaviour
+    public abstract class Unit : MonoBehaviour, IRotation
     {
         public Transform transform;
         public Rigidbody rb;
@@ -37,6 +37,8 @@ namespace FPS_Game
         public abstract void Move(Vector2 input);
 
         public abstract void Jump();
+
+        public abstract void Rotate(float x, float y);
     }
 }
 

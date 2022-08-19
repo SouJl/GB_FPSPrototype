@@ -16,8 +16,6 @@ namespace FPS_Game
 
         [SerializeField] private Unit _player;
 
-        [SerializeField] private PlayerLook _playerLook;
-
 
         private void Awake()
         {
@@ -28,7 +26,7 @@ namespace FPS_Game
             _moveController = new MoveController(inputSystem, _player);
             _executeUpdate.AddExecuteObject(_moveController);
 
-            _lookController = new LookController(inputSystem, _playerLook);
+            _lookController = new LookController(inputSystem, _player);
             _executeLateUpdate.AddExecuteObject(_lookController);
         }
 
