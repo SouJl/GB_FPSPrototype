@@ -25,12 +25,8 @@ namespace FPS_Game
         public virtual void Awake() 
         {
             _collider = GetComponent<Collider>();
-            _renderer = GetComponent<Renderer>();
-
-            IsActive = true;
-            
+            _renderer = GetComponent<Renderer>();            
             _color = Random.ColorHSV();
-
             if(_renderer != null)
                 _renderer.sharedMaterial.color = _color;
         }

@@ -56,7 +56,7 @@ namespace FPS_Game
         {
             for (int i = 0; i < _gamePoints.Length; i++)
             {
-                //_gamePoints[i].gameObject.SetActive(true);
+                _gamePoints[i].gameObject.SetActive(true);
                 _gamePoints[i].IsActive = true;
             }
         }

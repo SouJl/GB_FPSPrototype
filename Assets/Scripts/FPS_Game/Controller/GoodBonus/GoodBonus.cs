@@ -4,8 +4,6 @@
     {
         public int BonusPoints;
 
-        private DisplayBonuses _displayBonuses;
-
         public override void Awake()
         {
             base.Awake();
