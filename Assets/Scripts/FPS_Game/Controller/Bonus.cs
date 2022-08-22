@@ -2,7 +2,7 @@
 
 namespace FPS_Game
 {
-    [RequireComponent(typeof(Collider), typeof(Renderer))]
+    [RequireComponent(typeof(Collider))]
     public abstract class Bonus : MonoBehaviour, IExecute
     {
         private bool _isActive;
@@ -30,7 +30,9 @@ namespace FPS_Game
             IsActive = true;
             
             _color = Random.ColorHSV();
-            _renderer.sharedMaterial.color = _color;
+
+            if(_renderer != null)
+                _renderer.sharedMaterial.color = _color;
         }
 
         private void OnTriggerEnter(Collider other)

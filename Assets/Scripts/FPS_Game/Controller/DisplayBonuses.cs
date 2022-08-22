@@ -28,9 +28,14 @@ namespace FPS_Game
         {
             _gamePointsValue += value;
             Debug.Log($"Вы набрали {_gamePointsValue}");
+
             if(_gamePointsValue > 500)
                 Debug.Log($"Игра пройдена!");
         }
 
+        public void DisplayPlayerDamage(int value) 
+        {
+            Debug.Log($"Вам было нанесено {value} урона");
+        }
     }
 }
