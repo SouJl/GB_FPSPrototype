@@ -15,6 +15,7 @@ namespace FPS_Game
             {
                 _isActive = value;
                 _collider.enabled = value;
+                _collider.isTrigger = value;
             }
         }
 

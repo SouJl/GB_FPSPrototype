@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace FPS_Game 
@@ -20,12 +21,13 @@ namespace FPS_Game
         private CharacterController controller;
         private Vector3 velocity;
         private bool _isOnGround;
-        private float xRotation = 0f;
-
+        private float _xRotation = 0f;
+        private float _prevSpeed;
 
         public override void Awake()
         {
             base.Awake();
+            CurrentSpeed = speed;
             controller = GetComponent<CharacterController>();
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -37,7 +39,7 @@ namespace FPS_Game
             Vector3 direction = Vector3.zero;
             direction.x = input.x;
             direction.z = input.y;
-            controller.Move(transform.TransformDirection(direction) * speed * Time.deltaTime);
+            controller.Move(transform.TransformDirection(direction) * CurrentSpeed * Time.deltaTime);
 
             velocity.y -= gravity * Time.deltaTime;
             if (_isOnGround && velocity.y < 0)
@@ -58,12 +60,25 @@ namespace FPS_Game
             float mouseX = x;
             float mouseY = y;
 
-            xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
-            xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+            _xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
+            _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
 
-            playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
+        }
+
+        public void SpeedChange(float speedScaler, float timeDelay) 
+        {
+            _prevSpeed = CurrentSpeed;
+            CurrentSpeed *= speedScaler;
+            StartCoroutine(SpeedChangeDelay(timeDelay));
+        }
+
+        IEnumerator SpeedChangeDelay(float time) 
+        {
+            yield return new WaitForSeconds(time);
+            CurrentSpeed = _prevSpeed;
         }
 
         public void Heal(float healValue)

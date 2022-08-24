@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3022936989060999483}
   - component: {fileID: 3022936989060999480}
   - component: {fileID: 3022936989060999481}
-  - component: {fileID: 3022936989060999485}
+  - component: {fileID: 2475970781225004409}
   m_Layer: 0
   m_Name: GamePoint
   m_TagString: Untagged
@@ -98,16 +98,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3022936989060999485
+--- !u!114 &2475970781225004409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3022936989060999462}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef72c07ab80c66f4b89e33b19c6d95da, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dfa592fe49574f4cac80c86e55f2aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSpeed: 0
+  flyHeight: 1.5
   BonusPoints: 100

@@ -10,8 +10,7 @@ namespace FPS_Game
         [Header("Health Settings")]
         public float maxHealth = 100f;
 
-
-        private float _speed = 5f;
+        private float _currentSpeed;
         private float _currentHealth;
         private bool _isDead;
 
@@ -21,6 +20,22 @@ namespace FPS_Game
             set 
             {
                 _currentHealth = Mathf.Clamp(value, 0f, maxHealth);
+            }
+        }
+
+        public float CurrentSpeed 
+        {
+            get => _currentSpeed;
+            set 
+            {
+                if(value > 0)
+                {
+                    _currentSpeed = value;
+                }
+                else 
+                {
+                    _currentSpeed = 0;
+                }
             }
         }
 

@@ -5,7 +5,7 @@ namespace FPS_Game
     public class Main : MonoBehaviour
     {
         [SerializeField] private Unit _player;
-        [SerializeField] private GoodBonus[] _gamePoints;
+        [SerializeField] private GamePoint[] _gamePoints;
 
         private PlayerInput inputSystem;
 
