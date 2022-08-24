@@ -1,19 +1,24 @@
-﻿namespace FPS_Game
+﻿using UnityEngine;
+
+namespace FPS_Game
 {
     public class GoodBonus : Bonus
     {
         public int BonusPoints;
+        public float rotateSpeed;
+        public float flyHeight;
 
         public override void Awake()
         {
             base.Awake();
-            //init bonus point, material height
+            var pos = transform.position;
+            pos.y = flyHeight;
+            transform.position = pos;
         }
 
         public override void Update()
         {
-            //fly
-            //rotate
+            transform.RotateAround(transform.position, Vector3.up, rotateSpeed * Time.deltaTime);
         }
 
         protected override void Interaction(Player player)
