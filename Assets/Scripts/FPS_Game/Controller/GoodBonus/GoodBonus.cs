@@ -16,10 +16,10 @@
             //rotate
         }
 
-        protected override void Interaction()
+        protected override void Interaction(Player player)
         {
             DisplayBonuses.Instance.DisplayGamePoints(BonusPoints);
-            this.gameObject.SetActive(false);           
+            gameObject.SetActive(false);           
         }
     }
 }

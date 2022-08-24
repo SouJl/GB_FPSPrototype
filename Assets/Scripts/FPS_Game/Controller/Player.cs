@@ -14,17 +14,19 @@ namespace FPS_Game
         public float xSensitivity = 30f;
         public float ySensitivity = 30f;
 
+        [Header("Health settings: Player")]
+        public bool isInvincible = false;
+
         private CharacterController controller;
         private Vector3 velocity;
         private bool _isOnGround;
         private float xRotation = 0f;
 
+
         public override void Awake()
         {
             base.Awake();
             controller = GetComponent<CharacterController>();
-            Health = 100;
-
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -63,6 +65,20 @@ namespace FPS_Game
 
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
         }
+
+        public void Heal(float healValue)
+        {
+            CurrentHealth += healValue;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (isInvincible)
+                return;
+
+            CurrentHealth -= damage;
+        }
+
     }
 }
 

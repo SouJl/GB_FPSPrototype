@@ -16,9 +16,6 @@
             //rotate
         }
 
-        protected override void Interaction()
-        {
-            DisplayBonuses.Instance.DisplayPlayerDamage(Damage);
-        }
+        protected override void Interaction(Player player) { }
     }
 }

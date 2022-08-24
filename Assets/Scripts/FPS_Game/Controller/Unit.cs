@@ -6,32 +6,28 @@ namespace FPS_Game
     public abstract class Unit : MonoBehaviour, IRotation
     {
         public Transform transform;
-        public Rigidbody rb;
+      
+        [Header("Health Settings")]
+        public float maxHealth = 100f;
+
 
         private float _speed = 5f;
-        private float _health = 100f;
+        private float _currentHealth;
         private bool _isDead;
 
-        public float Health 
+        public float CurrentHealth 
         { 
-            get => _health;
+            get => _currentHealth;
             set 
             {
-                if (value <= 100 && value >= 0)
-                {
-                    _health = value;
-                }
-                else
-                {
-                    _health = 100f;
-                }
+                _currentHealth = Mathf.Clamp(value, 0f, maxHealth);
             }
         }
 
         public virtual void Awake() 
         {
             TryGetComponent(out transform);
-            TryGetComponent(out rb);
+            CurrentHealth = maxHealth;
         }
 
         public abstract void Move(Vector2 input);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6452504732203143821}
   - component: {fileID: 1430766089786781203}
   - component: {fileID: 3802972801903459058}
+  - component: {fileID: 5111120552859417119}
   m_Layer: 0
   m_Name: Poison
   m_TagString: Untagged
@@ -4844,6 +4845,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 0.5, z: 8}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &5111120552859417119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172665666891032840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218f7c9368b0b5746b2674a0c980d990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 50
+  _tickTime: 2
+  _isOnPoisen: 0
 --- !u!1 &7135427980312152992
 GameObject:
   m_ObjectHideFlags: 0
@@ -4888,6 +4904,7 @@ GameObject:
   - component: {fileID: 2033187562238263314}
   - component: {fileID: 1395012063187544412}
   - component: {fileID: 3825512857308021196}
+  - component: {fileID: 9106688643661312137}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -4960,3 +4977,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9106688643661312137
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036267429061637757}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
