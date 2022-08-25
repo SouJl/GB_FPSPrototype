@@ -33,22 +33,34 @@ namespace FPS_Game
 
         private void Update()
         {
-            for (int i = 0; i < _executeUpdate.Length; i++)
+            while (_executeUpdate.MoveNext()) 
             {
-                if (_executeUpdate.InteractiveObject[i] == null) continue;
-
-                _executeUpdate.InteractiveObject[i].Update();
+                IExecute tmp = (IExecute)_executeUpdate.Current;
+                tmp.Update();
             }
+            _executeUpdate.Reset();
+            /* for (int i = 0; i < _executeUpdate.Length; i++)
+             {
+                 if (_executeUpdate.InteractiveObject[i] == null) continue;
+
+                 _executeUpdate.InteractiveObject[i].Update();
+             }*/
         }
 
         private void LateUpdate()
         {
-            for (int i = 0; i < _executeLateUpdate.Length; i++)
+            while (_executeLateUpdate.MoveNext())
+            {
+                IExecute tmp = (IExecute)_executeLateUpdate.Current;
+                tmp.Update();
+            }
+            _executeLateUpdate.Reset();
+            /*for (int i = 0; i < _executeLateUpdate.Length; i++)
             {
                 if (_executeLateUpdate.InteractiveObject[i] == null) continue;
 
                 _executeLateUpdate.InteractiveObject[i].Update();
-            }
+            }*/
         }
 
 

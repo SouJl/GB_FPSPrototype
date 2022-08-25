@@ -1,6 +1,6 @@
 ﻿namespace FPS_Game
 {
-    public class OnTakeDamageBonus : Bonus
+    public class OnTakeDamageBonus : Interactable
     {
         public int Damage;
 

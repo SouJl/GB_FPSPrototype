@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public class AidKit : PickUpBonus
+    public class AidKit : PickUp
     {
         [Header("AidKit Settings")]
         public float HealAmount = 30f;

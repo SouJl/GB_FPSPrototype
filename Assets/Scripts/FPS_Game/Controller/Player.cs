@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace FPS_Game 
+namespace FPS_Game
 {
     public class Player : Unit
     {
@@ -30,6 +30,7 @@ namespace FPS_Game
             CurrentSpeed = speed;
             controller = GetComponent<CharacterController>();
             Cursor.lockState = CursorLockMode.Locked;
+            IsBonusActive = false;
         }
 
         public override void Move(Vector2 input)
@@ -68,19 +69,6 @@ namespace FPS_Game
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
         }
 
-        public void SpeedChange(float speedScaler, float timeDelay) 
-        {
-            _prevSpeed = CurrentSpeed;
-            CurrentSpeed *= speedScaler;
-            StartCoroutine(SpeedChangeDelay(timeDelay));
-        }
-
-        IEnumerator SpeedChangeDelay(float time) 
-        {
-            yield return new WaitForSeconds(time);
-            CurrentSpeed = _prevSpeed;
-        }
-
         public void Heal(float healValue)
         {
             CurrentHealth += healValue;
@@ -92,6 +80,51 @@ namespace FPS_Game
                 return;
 
             CurrentHealth -= damage;
+        }
+
+        public Bonus CurrentBonus { get; set; }
+        public bool IsBonusActive { get; set; }
+
+        public void AddBonus(Bonus bonus)
+        {
+            if (!bonus) return;
+            switch (bonus.bonusType)
+            {
+                case BonusType.Haste:
+                    {
+                        _prevSpeed = CurrentSpeed;
+                        CurrentSpeed *= bonus.bonusValue;
+                        break;
+                    }
+                case BonusType.Slow:
+                    {
+                        _prevSpeed = CurrentSpeed;
+                        CurrentSpeed *= bonus.bonusValue;
+                        break;
+                    }
+            }
+            CurrentBonus = bonus;
+            StartCoroutine(ActiveBonusDelay(bonus.activeTime));
+        }
+
+        IEnumerator ActiveBonusDelay(float time)
+        {
+            IsBonusActive = true;
+            yield return new WaitForSeconds(time);
+            switch (CurrentBonus.bonusType)
+            {
+                case BonusType.Haste:
+                    {
+                        CurrentSpeed = _prevSpeed;
+                        break;
+                    }
+                case BonusType.Slow:
+                    {
+                        CurrentSpeed = _prevSpeed;
+                        break;
+                    }
+            }
+            IsBonusActive = false;
         }
 
     }

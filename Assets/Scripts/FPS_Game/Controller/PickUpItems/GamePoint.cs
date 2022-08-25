@@ -1,6 +1,6 @@
 ﻿namespace FPS_Game
 {
-    public class GamePoint : PickUpBonus
+    public class GamePoint : PickUp
     {
         public int BonusPoints;
 

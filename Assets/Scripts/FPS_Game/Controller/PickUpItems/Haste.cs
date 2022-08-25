@@ -2,11 +2,10 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public class Haste : PickUpBonus
+    public class Haste : Bonus
     {
         [Header("Haste Settings")]
         public float SpeedUpScaler = 2f;
-        public float activeTime = 5f;
 
         public override void Update()
         {
@@ -15,7 +14,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            player.SpeedChange(SpeedUpScaler, activeTime);
+            //player.SpeedChange(SpeedUpScaler, activeTime);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }

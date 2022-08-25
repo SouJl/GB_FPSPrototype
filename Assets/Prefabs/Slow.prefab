@@ -808,7 +808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6052144276818667280}
   - component: {fileID: 2160915943316982516}
-  - component: {fileID: 5938509511413851856}
+  - component: {fileID: -8824436030094840751}
   m_Layer: 0
   m_Name: Slow
   m_TagString: Untagged
@@ -846,7 +846,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &5938509511413851856
+--- !u!114 &-8824436030094840751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -855,9 +855,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6052144276818667375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f05325a1b98e84b939f4d7368bf577, type: 3}
+  m_Script: {fileID: 11500000, guid: 82e9a082e41c7de479d623f5dc73a7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 0
   flyHeight: 0
-  slowScale: 0.5
+  bonusValue: 0
+  icon: {fileID: 0}
+  activeTime: 5
+  bonusType: 0

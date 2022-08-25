@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public class Slow : PickUpBonus
+    public class Slow : Bonus
     {
         [Range(0f,1f)]
         public float slowScale = 0.5f;
-        public float activeTime = 5f;
 
         public override void Update()
         {
@@ -16,7 +15,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            player.SpeedChange(slowScale, activeTime);
+            //player.SpeedChange(slowScale, activeTime);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }

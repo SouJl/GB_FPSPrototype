@@ -5,7 +5,7 @@ namespace FPS_Game
     public class BonusSpawnController : MonoBehaviour
     {
         [Header("Spawn Bonus Parametrs")]
-        public Bonus _bonusPrefab;
+        public Interactable _bonusPrefab;
         public Vector3 center;
         public Vector3 size;
         [Range(1,10)]
