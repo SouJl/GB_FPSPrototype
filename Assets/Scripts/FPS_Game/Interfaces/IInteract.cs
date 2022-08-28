@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IInteract : MonoBehaviour
+namespace FPS_Game 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public interface IInteract 
     {
-        
+        public bool IsActive { get; set; }
+
+        void Interaction(Player player) { }
     }
 }
+
