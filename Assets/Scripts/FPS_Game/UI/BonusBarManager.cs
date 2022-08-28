@@ -10,9 +10,9 @@ namespace FPS_Game
         public Image iconImage;
         public TextMeshProUGUI counterText;
 
-        private string counter;
         private Player playerController;
         private bool _isTimerEnable;
+        private float _timerCounter;
 
         private void Awake()
         {
@@ -23,23 +23,35 @@ namespace FPS_Game
         private void Update()
         {
             if (!playerController) return;
+            BonusTimer();
+        }
 
-            if (!_isTimerEnable) 
+        private void BonusTimer() 
+        {
+            if (playerController.IsBonusActive)
             {
-                if (playerController.IsBonusActive)
+                if (!_isTimerEnable)
                 {
-                    iconImage.sprite = playerController.CurrentBonus.icon;
-                    // counterText.text = playerController.CurrentBonus.icon;
+                    _timerCounter = (int)playerController.CurrentBonus.activeTime + 1;
+                    iconImage.enabled = true;
+                    _isTimerEnable = true;
                 }
-                else
-                    ResetUI();
+                _timerCounter -= Time.deltaTime;
+                float secondsLeft = Mathf.FloorToInt(_timerCounter % 60);
+                iconImage.sprite = playerController.CurrentBonus.icon;
+                counterText.text = $"{secondsLeft}";
             }
+            else
+                ResetUI();
         }
 
         private void ResetUI() 
         {
             iconImage.sprite = null;
             counterText.text = "";
+            _timerCounter = 0;
+            _isTimerEnable = false;
+            iconImage.enabled = false;
         }
     }
 }
