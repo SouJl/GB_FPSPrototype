@@ -1,12 +1,43 @@
-﻿namespace FPS_Game
+﻿using UnityEngine;
+
+namespace FPS_Game
 {
-    public class GamePoint : PickUp
+    public sealed class GamePoint : Interactable, IPickUp
     {
         public int BonusPoints;
+        
+        [Header("PickUp Settings")]
+        [SerializeField] private float _rotateSpeed;
+        [SerializeField] private float _flyHeight;
 
-        public override void Update()
+        public float RotateSpeed
         {
-            base.Update();
+            get => _rotateSpeed;
+            set => _rotateSpeed = value;
+        }
+        public float FlyHeight
+        {
+            get => _flyHeight;
+            set => _flyHeight = value;
+        }
+        
+        public override void Awake()
+        {
+            base.Awake();
+
+            var pos = transform.position;
+            pos.y = FlyHeight;
+            transform.position = pos;
+        }
+
+        public void Update()
+        {
+            MoveBehavior();
+        }
+
+        public void MoveBehavior()
+        {
+            transform.RotateAround(transform.position, Vector3.up, RotateSpeed * Time.deltaTime);
         }
 
         protected override void Interaction(Player player)

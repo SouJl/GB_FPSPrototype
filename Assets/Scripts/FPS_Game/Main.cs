@@ -5,7 +5,7 @@ namespace FPS_Game
     public class Main : MonoBehaviour
     {
         [SerializeField] private Unit _player;
-        [SerializeField] private PickUp[] _gamePoints;
+        [SerializeField] private Interactable[] interactItems;
 
         private PlayerInput inputSystem;
 
@@ -54,10 +54,10 @@ namespace FPS_Game
 
         private void SpawnBonus()
         {
-            for (int i = 0; i < _gamePoints.Length; i++)
+            for (int i = 0; i < interactItems.Length; i++)
             {
-                _gamePoints[i].gameObject.SetActive(true);
-                _gamePoints[i].IsActive = true;
+                interactItems[i].gameObject.SetActive(true);
+                interactItems[i].IsActive = true;
             }
         }
     }

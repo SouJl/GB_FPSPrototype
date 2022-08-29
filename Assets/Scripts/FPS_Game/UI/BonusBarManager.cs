@@ -1,9 +1,8 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FPS_Game 
+namespace FPS_Game.UI 
 {
     public class BonusBarManager : MonoBehaviour
     {

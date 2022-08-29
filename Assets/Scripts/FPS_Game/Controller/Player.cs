@@ -88,15 +88,9 @@ namespace FPS_Game
         public void AddBonus(Bonus bonus)
         {
             if (!bonus) return;
-            switch (bonus.bonusType)
+            switch (bonus.BonusType)
             {
-                case BonusType.Haste:
-                    {
-                        _prevSpeed = CurrentSpeed;
-                        CurrentSpeed *= bonus.bonusValue;
-                        break;
-                    }
-                case BonusType.Slow:
+                case BonusType.SpeedChange:
                     {
                         _prevSpeed = CurrentSpeed;
                         CurrentSpeed *= bonus.bonusValue;
@@ -111,14 +105,9 @@ namespace FPS_Game
         {
             IsBonusActive = true;
             yield return new WaitForSeconds(time);
-            switch (CurrentBonus.bonusType)
+            switch (CurrentBonus.BonusType)
             {
-                case BonusType.Haste:
-                    {
-                        CurrentSpeed = _prevSpeed;
-                        break;
-                    }
-                case BonusType.Slow:
+                case BonusType.SpeedChange:
                     {
                         CurrentSpeed = _prevSpeed;
                         break;

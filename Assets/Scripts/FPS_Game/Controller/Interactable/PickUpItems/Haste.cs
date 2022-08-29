@@ -2,10 +2,12 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public class Haste : Bonus
+    public sealed class Haste : Bonus
     {
         [Header("Haste Settings")]
-        public float SpeedUpScaler = 2f;
+        public float speedUpScaler = 2f;
+
+        public override BonusType BonusType => BonusType.SpeedChange;
 
         public override void Update()
         {
@@ -14,7 +16,8 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            //player.SpeedChange(SpeedUpScaler, activeTime);
+            bonusValue = speedUpScaler;
+            player.AddBonus(this);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }

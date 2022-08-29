@@ -3,7 +3,7 @@
     public enum BonusType
     {
         None,
-        Haste,
-        Slow
+        SpeedChange,
+        DamageChange,
     }
 }

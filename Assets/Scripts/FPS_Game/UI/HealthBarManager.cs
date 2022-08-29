@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FPS_Game
+namespace FPS_Game.UI
 {
     public class HealthBarManager : MonoBehaviour
     {
