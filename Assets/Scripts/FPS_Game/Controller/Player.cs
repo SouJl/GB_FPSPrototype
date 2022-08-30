@@ -30,7 +30,6 @@ namespace FPS_Game
             CurrentSpeed = speed;
             controller = GetComponent<CharacterController>();
             Cursor.lockState = CursorLockMode.Locked;
-            IsBonusActive = false;
         }
 
         public override void Move(Vector2 input)
@@ -69,23 +68,19 @@ namespace FPS_Game
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
         }
 
-        public void Heal(float healValue)
+        public void Heal(object sender, float value)
         {
-            CurrentHealth += healValue;
+            CurrentHealth += value;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(object sender, float value)
         {
             if (isInvincible)
                 return;
-
-            CurrentHealth -= damage;
+            CurrentHealth -= value;
         }
 
-        public Bonus CurrentBonus { get; set; }
-        public bool IsBonusActive { get; set; }
-
-        public void AddBonus(object value, Bonus bonus)
+        public void AddBonus(object sender, Bonus bonus)
         {
             if (!bonus) return;
             switch (bonus.BonusType)
@@ -97,15 +92,13 @@ namespace FPS_Game
                         break;
                     }
             }
-            CurrentBonus = bonus;
-            StartCoroutine(ActiveBonusDelay(bonus.activeTime));
+            StartCoroutine(ActiveBonusDelay(bonus));
         }
 
-        IEnumerator ActiveBonusDelay(float time)
+        IEnumerator ActiveBonusDelay(Bonus bonus)
         {
-            IsBonusActive = true;
-            yield return new WaitForSeconds(time);
-            switch (CurrentBonus.BonusType)
+            yield return new WaitForSeconds(bonus.activeTime);
+            switch (bonus.BonusType)
             {
                 case BonusType.SpeedChange:
                     {
@@ -113,7 +106,6 @@ namespace FPS_Game
                         break;
                     }
             }
-            IsBonusActive = false;
         }
 
     }

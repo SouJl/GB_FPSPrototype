@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace FPS_Game
         {
             while (_isOnPoisen) 
             {
-                player.TakeDamage(Damage);
+                DealDamage();
                 DisplayBonuses.Instance.DisplayPlayerDamage(Damage);
                 yield return new WaitForSeconds(time);
             }

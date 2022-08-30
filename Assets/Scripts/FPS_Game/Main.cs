@@ -1,3 +1,4 @@
+using FPS_Game.UI;
 using UnityEngine;
 
 namespace FPS_Game
@@ -15,6 +16,9 @@ namespace FPS_Game
         private ListExecuteController _executeUpdate;
         private ListExecuteController _executeLateUpdate;
 
+        /*UI components*/
+        private BonusBarManager _bonusBarManager;
+        private HealthBarManager _healthBarManager;
 
         private void Awake()
         {
@@ -27,7 +31,10 @@ namespace FPS_Game
 
             _lookController = new LookController(inputSystem, _player);
             _executeLateUpdate.AddExecuteObject(_lookController);
-            
+
+            _bonusBarManager = GetComponentInChildren<BonusBarManager>();
+            _healthBarManager = GetComponentInChildren<HealthBarManager>();
+
             SpawnBonus();
         }
 
@@ -62,6 +69,15 @@ namespace FPS_Game
                 if(interactItems[i] is Bonus bonus) 
                 {
                     bonus.AddBonus += _player.AddBonus;
+                    bonus.AddBonus += _bonusBarManager.AddBonus;
+                }
+                if(interactItems[i] is AidKit aidKit)
+                {
+                    aidKit.Heal += _player.Heal;
+                }
+                if (interactItems[i] is Trap trap)
+                {
+                    trap.TakeDamage += _player.TakeDamage;
                 }
             }
         }

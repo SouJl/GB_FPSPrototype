@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace FPS_Game 
@@ -7,6 +8,8 @@ namespace FPS_Game
         [Header("AidKit Settings")]
         public float HealAmount = 30f;
 
+        public event EventHandler<float> Heal;
+
         public override void Update()
         {
             base.Update();
@@ -14,7 +17,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            player.Heal(HealAmount);
+            Heal?.Invoke(this, HealAmount);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }
