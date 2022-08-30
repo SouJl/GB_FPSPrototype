@@ -5,15 +5,15 @@ namespace FPS_Game
 {
     public class LookController : IExecute
     {
-        private IRotation _rotator;
+        private Unit _unit;
 
         private PlayerInput playerInput;
 
         private InputAction look;
 
-        public LookController(PlayerInput inputSys, IRotation rotator) 
+        public LookController(PlayerInput inputSys, Unit unit) 
         {
-            _rotator = rotator;
+            _unit = unit;
             playerInput = inputSys;
             look = playerInput.Player.Look;
 
@@ -23,7 +23,7 @@ namespace FPS_Game
         public void Update()
         {
             Vector2 rot = look.ReadValue<Vector2>();
-            _rotator.Rotate(rot.x, rot.y);
+            _unit.LookRotate(rot.x, rot.y);
         }
 
         private void OnEnable()

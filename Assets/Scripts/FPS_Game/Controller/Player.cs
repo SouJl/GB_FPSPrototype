@@ -56,7 +56,7 @@ namespace FPS_Game
             velocity.y = Mathf.Sqrt(jumpHeight * 3.0f * gravity);
         }
 
-        public override void Rotate(float x, float y)
+        public override void LookRotate(float x, float y)
         {
             float mouseX = x;
             float mouseY = y;

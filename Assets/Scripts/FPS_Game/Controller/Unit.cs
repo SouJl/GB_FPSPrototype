@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FPS_Game 
 {
-    public abstract class Unit : MonoBehaviour, IRotation
+    public abstract class Unit : MonoBehaviour
     {
         public Transform transform;
       
@@ -49,7 +49,7 @@ namespace FPS_Game
 
         public abstract void Jump();
 
-        public abstract void Rotate(float x, float y);
+        public abstract void LookRotate(float x, float y);
     }
 }
 
