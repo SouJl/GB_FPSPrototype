@@ -17,9 +17,7 @@ namespace FPS_Game
         protected override void Interaction(Player player)
         {
             bonusValue = speedUpScaler;
-            player.AddBonus(this);
-            IsActive = false;
-            gameObject.SetActive(IsActive);
+            base.Interaction(player);
         }
     }
 }

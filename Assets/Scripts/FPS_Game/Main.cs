@@ -4,7 +4,7 @@ namespace FPS_Game
 {
     public class Main : MonoBehaviour
     {
-        [SerializeField] private Unit _player;
+        [SerializeField] private Player _player;
         [SerializeField] private Interactable[] interactItems;
 
         private PlayerInput inputSystem;
@@ -58,6 +58,11 @@ namespace FPS_Game
             {
                 interactItems[i].gameObject.SetActive(true);
                 interactItems[i].IsActive = true;
+
+                if(interactItems[i] is Bonus bonus) 
+                {
+                    bonus.AddBonus += _player.AddBonus;
+                }
             }
         }
     }

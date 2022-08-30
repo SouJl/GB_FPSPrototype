@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FPS_Game
 {
@@ -9,7 +10,8 @@ namespace FPS_Game
         public Sprite icon;
         public float activeTime = 5f;
         public abstract BonusType BonusType { get; }
- 
+
+        public event EventHandler<Bonus> AddBonus;
 
         public override void Update()
         {
@@ -18,7 +20,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            player.AddBonus(this);
+            AddBonus?.Invoke(this, this);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }   

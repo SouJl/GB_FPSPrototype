@@ -85,7 +85,7 @@ namespace FPS_Game
         public Bonus CurrentBonus { get; set; }
         public bool IsBonusActive { get; set; }
 
-        public void AddBonus(Bonus bonus)
+        public void AddBonus(object value, Bonus bonus)
         {
             if (!bonus) return;
             switch (bonus.BonusType)
