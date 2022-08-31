@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -24,12 +25,13 @@ namespace FPS_Game
         private float _xRotation = 0f;
         private float _prevSpeed;
 
+        public event Action<bool> GameOver = delegate(bool state) { }; 
+
         public override void Awake()
         {
             base.Awake();
             CurrentSpeed = speed;
             controller = GetComponent<CharacterController>();
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public override void Move(Vector2 input)
@@ -78,6 +80,8 @@ namespace FPS_Game
             if (isInvincible)
                 return;
             CurrentHealth -= value;
+
+            if (CurrentHealth <= 0) GameOver?.Invoke(false);
         }
 
         public void AddBonus(object sender, Bonus bonus)

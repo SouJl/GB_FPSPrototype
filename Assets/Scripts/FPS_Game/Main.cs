@@ -1,12 +1,18 @@
 using FPS_Game.UI;
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace FPS_Game
 {
     public class Main : MonoBehaviour
     {
+        [SerializeField] private float _gameGoal = 500;
         [SerializeField] private Player _player;
         [SerializeField] private Interactable[] interactItems;
+        [SerializeField] private Button _restartButton;
 
         private PlayerInput inputSystem;
 
@@ -19,23 +25,35 @@ namespace FPS_Game
         /*UI components*/
         private BonusBarManager _bonusBarManager;
         private HealthBarManager _healthBarManager;
+        private ScoreManager _scoreManager;
+        private GameOverManager _gameOverManager;
+        
+
+        private float _gameScore;
 
         private void Awake()
         {
-            inputSystem = new PlayerInput();
-            _executeUpdate = new ListExecuteController();
-            _executeLateUpdate = new ListExecuteController();
+            _gameScore = 0;
+            try 
+            {
+                if (!_player) throw new PlayerNotFoundExeption("Объект Player не задан");
 
-            _moveController = new MoveController(inputSystem, _player);
-            _executeUpdate.AddExecuteObject(_moveController);
+                inputSystem = new PlayerInput();
+                InitExecuteObjects();
+                InitUIComponents();
+          
+                _player.GameOver += GameOver;
+                _player.GameOver += _gameOverManager.GameOver;
 
-            _lookController = new LookController(inputSystem, _player);
-            _executeLateUpdate.AddExecuteObject(_lookController);
+                SpawnBonus();
 
-            _bonusBarManager = GetComponentInChildren<BonusBarManager>();
-            _healthBarManager = GetComponentInChildren<HealthBarManager>();
-
-            SpawnBonus();
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            catch (PlayerNotFoundExeption ex) 
+            {
+                Debug.Log($"{ex} : {ex.Message}!");
+                Quit();
+            }         
         }
 
         private void Update()
@@ -59,6 +77,7 @@ namespace FPS_Game
         }
 
 
+
         private void SpawnBonus()
         {
             for (int i = 0; i < interactItems.Length; i++)
@@ -79,8 +98,74 @@ namespace FPS_Game
                 {
                     trap.TakeDamage += _player.TakeDamage;
                 }
+                if(interactItems[i] is IPoint point)
+                {
+                    point.AddPoint += AddPoints;
+                    point.AddPoint += _scoreManager.AddPoints;
+                }
             }
         }
+
+        private void AddPoints(float value)
+        {
+            _gameScore += value;
+            if(_gameScore >= _gameGoal) 
+            {
+                _gameOverManager.GameOver(true);
+                GameOver(true);
+            } 
+        }
+
+        private void GameOver(bool state) 
+        {
+            _restartButton.gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+        }
+         
+        private void RestartGame()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(0);
+        }
+
+
+        #region Game Init
+
+        private void InitExecuteObjects()
+        {
+            _executeUpdate = new ListExecuteController();
+            _executeLateUpdate = new ListExecuteController();
+
+            _moveController = new MoveController(inputSystem, _player);
+            _executeUpdate.AddExecuteObject(_moveController);
+
+            _lookController = new LookController(inputSystem, _player);
+            _executeLateUpdate.AddExecuteObject(_lookController);
+        }
+
+        private void InitUIComponents()
+        {
+            _bonusBarManager = GetComponentInChildren<BonusBarManager>();
+            _healthBarManager = GetComponentInChildren<HealthBarManager>();
+            _scoreManager = GetComponentInChildren<ScoreManager>();
+            _gameOverManager = GetComponentInChildren<GameOverManager>();
+
+            _restartButton.onClick.AddListener(RestartGame);
+            _restartButton.gameObject.SetActive(false);
+        }
+
+        #endregion
+
+        public void Quit()
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+            Application.Quit();
+            #endif
+        }
+
     }
 }
 

@@ -1,12 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FPS_Game
 {
-    public sealed class GamePoint : PickUpItem
+    public sealed class GamePoint : PickUpItem, IPoint
     {
         [Header("GamePoint Settings")]
-        public int BonusPoints;
-        
+        [SerializeField]private float _points;
+
+        public float Points
+        {
+            get => _points;
+            set 
+            {
+                _points = value;
+            }
+        }
+
+        public event Action<float> AddPoint = delegate(float value) { };
+
         public override void Update()
         {
             base.Update();
@@ -14,7 +26,8 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            DisplayBonuses.Instance.DisplayGamePoints(BonusPoints);
+            AddPoint?.Invoke(Points);
+
             IsActive = false;
             gameObject.SetActive(IsActive);
         }
