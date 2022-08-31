@@ -8,7 +8,7 @@ namespace FPS_Game
         [Header("AidKit Settings")]
         public float HealAmount = 30f;
 
-        public event EventHandler<float> Heal;
+        public event Action<float> Heal = delegate(float value) { };
 
         public override void Update()
         {
@@ -17,7 +17,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            Heal?.Invoke(this, HealAmount);
+            Heal?.Invoke(HealAmount);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }

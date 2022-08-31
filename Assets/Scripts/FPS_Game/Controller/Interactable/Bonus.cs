@@ -11,7 +11,7 @@ namespace FPS_Game
         public float activeTime = 5f;
         public abstract BonusType BonusType { get; }
 
-        public event EventHandler<Bonus> AddBonus;
+        public event Action<Bonus> AddBonus = delegate(Bonus bonus) { };
 
         public override void Update()
         {
@@ -20,7 +20,7 @@ namespace FPS_Game
 
         protected override void Interaction(Player player)
         {
-            AddBonus?.Invoke(this, this);
+            AddBonus?.Invoke(this);
             IsActive = false;
             gameObject.SetActive(IsActive);
         }   

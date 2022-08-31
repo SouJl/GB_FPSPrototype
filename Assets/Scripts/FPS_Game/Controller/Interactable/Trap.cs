@@ -6,7 +6,7 @@ namespace FPS_Game
     {
         public int Damage;
         
-        public event EventHandler<float> TakeDamage;
+        public event Action<float> TakeDamage =  delegate(float value) { };
 
         public override void Awake()
         {
@@ -15,7 +15,7 @@ namespace FPS_Game
 
         protected void DealDamage() 
         {
-            TakeDamage?.Invoke(this, Damage);
+            TakeDamage?.Invoke(Damage);
         }
 
         protected override void Interaction(Player player) { }

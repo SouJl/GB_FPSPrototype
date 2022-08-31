@@ -15,7 +15,7 @@ namespace FPS_Game.UI
             ResetUI();
         }
 
-        public void AddBonus(object sender, Bonus bonus)
+        public void AddBonus(Bonus bonus)
         {
             StartCoroutine(BonusTimer(bonus));
         }

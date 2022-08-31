@@ -70,12 +70,12 @@ namespace FPS_Game
             transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
         }
 
-        public void Heal(object sender, float value)
+        public void Heal(float value)
         {
             CurrentHealth += value;
         }
 
-        public void TakeDamage(object sender, float value)
+        public void TakeDamage(float value)
         {
             if (isInvincible)
                 return;
@@ -84,7 +84,7 @@ namespace FPS_Game
             if (CurrentHealth <= 0) GameOver?.Invoke(false);
         }
 
-        public void AddBonus(object sender, Bonus bonus)
+        public void AddBonus(Bonus bonus)
         {
             if (!bonus) return;
             switch (bonus.BonusType)
