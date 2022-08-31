@@ -80,30 +80,40 @@ namespace FPS_Game
 
         private void SpawnBonus()
         {
-            for (int i = 0; i < interactItems.Length; i++)
+            try
             {
-                interactItems[i].gameObject.SetActive(true);
-                interactItems[i].IsActive = true;
+                if (interactItems.Length == 0) throw new NoItemExeception("ѕоследовательность не содержит елементов", "interactItems");
 
-                if(interactItems[i] is Bonus bonus) 
+                for (int i = 0; i < interactItems.Length; i++)
                 {
-                    bonus.AddBonus += _player.AddBonus;
-                    bonus.AddBonus += _bonusBarManager.AddBonus;
-                }
-                if(interactItems[i] is AidKit aidKit)
-                {
-                    aidKit.Heal += _player.Heal;
-                }
-                if (interactItems[i] is Trap trap)
-                {
-                    trap.TakeDamage += _player.TakeDamage;
-                }
-                if(interactItems[i] is IPoint point)
-                {
-                    point.AddPoint += AddPoints;
-                    point.AddPoint += _scoreManager.AddPoints;
+                    interactItems[i].gameObject.SetActive(true);
+                    interactItems[i].IsActive = true;
+
+                    if (interactItems[i] is Bonus bonus)
+                    {
+                        bonus.AddBonus += _player.AddBonus;
+                        bonus.AddBonus += _bonusBarManager.AddBonus;
+                    }
+                    if (interactItems[i] is AidKit aidKit)
+                    {
+                        aidKit.Heal += _player.Heal;
+                    }
+                    if (interactItems[i] is Trap trap)
+                    {
+                        trap.TakeDamage += _player.TakeDamage;
+                    }
+                    if (interactItems[i] is IPoint point)
+                    {
+                        point.AddPoint += AddPoints;
+                        point.AddPoint += _scoreManager.AddPoints;
+                    }
                 }
             }
+            catch(NoItemExeception ex)
+            {
+                Debug.LogWarning($"Main: {ex.Message}; source - {ex.SourceName}");
+            }
+           
         }
 
         private void AddPoints(float value)

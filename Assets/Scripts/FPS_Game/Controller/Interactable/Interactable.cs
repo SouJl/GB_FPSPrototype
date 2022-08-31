@@ -14,8 +14,15 @@ namespace FPS_Game
             set 
             {
                 _isActive = value;
-                _collider.enabled = value;
-                _collider.isTrigger = value;
+                try
+                {
+                    _collider.enabled = value;
+                    _collider.isTrigger = value;
+                }
+                catch(System.NullReferenceException ex)
+                {
+                    Debug.Log($"Collider Warning: Source - {this} : {ex}");
+                }
             }
         }
 

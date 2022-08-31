@@ -11,6 +11,11 @@ namespace FPS_Game
 
         private bool _isOnPoisen;
 
+        public override void Awake()
+        {
+            base.Awake();
+        }
+
         private void Start()
         {
             _isOnPoisen = false;
@@ -21,7 +26,6 @@ namespace FPS_Game
             while (_isOnPoisen) 
             {
                 DealDamage();
-                DisplayBonuses.Instance.DisplayPlayerDamage(Damage);
                 yield return new WaitForSeconds(time);
             }
         }
