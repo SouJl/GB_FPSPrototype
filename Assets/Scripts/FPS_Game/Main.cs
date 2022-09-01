@@ -61,7 +61,7 @@ namespace FPS_Game
             while (_executeUpdate.MoveNext()) 
             {
                 IExecute tmp = (IExecute)_executeUpdate.Current;
-                tmp.Update();
+                tmp.Execute();
             }
             _executeUpdate.Reset();
         }
@@ -71,7 +71,7 @@ namespace FPS_Game
             while (_executeLateUpdate.MoveNext())
             {
                 IExecute tmp = (IExecute)_executeLateUpdate.Current;
-                tmp.Update();
+                tmp.Execute();
             }
             _executeLateUpdate.Reset();
         }
@@ -107,6 +107,8 @@ namespace FPS_Game
                         point.AddPoint += AddPoints;
                         point.AddPoint += _scoreManager.AddPoints;
                     }
+
+                    _executeUpdate.AddExecuteObject(interactItems[i]);
                 }
             }
             catch(NoItemExeception ex)

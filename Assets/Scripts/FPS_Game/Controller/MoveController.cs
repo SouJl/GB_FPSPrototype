@@ -24,7 +24,7 @@ namespace FPS_Game
             OnEnable();
         }
 
-        public void Update()
+        public void Execute()
         {
             _unit.Move(move.ReadValue<Vector2>());
         }

@@ -10,10 +10,10 @@ namespace FPS_Game
         public float slowScale = 0.5f;
 
         public override BonusType BonusType => BonusType.SpeedChange;
-        
-        public override void Update()
+
+        public override void Execute()
         {
-            base.Update();
+            base.Execute();
         }
 
         protected override void Interaction(Player player)

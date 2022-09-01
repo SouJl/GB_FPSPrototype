@@ -10,9 +10,9 @@ namespace FPS_Game
 
         public event Action<float> Heal = delegate(float value) { };
 
-        public override void Update()
+        public override void Execute()
         {
-            base.Update();
+            base.Execute();
         }
 
         protected override void Interaction(Player player)

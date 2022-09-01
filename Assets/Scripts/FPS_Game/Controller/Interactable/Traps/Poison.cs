@@ -14,10 +14,6 @@ namespace FPS_Game
         public override void Awake()
         {
             base.Awake();
-        }
-
-        private void Start()
-        {
             _isOnPoisen = false;
         }
 

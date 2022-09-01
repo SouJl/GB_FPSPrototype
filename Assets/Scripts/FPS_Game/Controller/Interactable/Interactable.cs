@@ -3,7 +3,7 @@
 namespace FPS_Game
 {
     [RequireComponent(typeof(Collider))]
-    public abstract class Interactable : MonoBehaviour, IInteract
+    public abstract class Interactable : MonoBehaviour, IInteract, IExecute
     {
         private bool _isActive;
         private Collider _collider;
@@ -30,6 +30,8 @@ namespace FPS_Game
         {
             _collider = GetComponent<Collider>();     
         }
+
+        public abstract void Execute();
 
         protected abstract void Interaction(Player player);
 

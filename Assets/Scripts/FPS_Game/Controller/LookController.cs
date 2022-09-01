@@ -20,7 +20,7 @@ namespace FPS_Game
             OnEnable();
         }
 
-        public void Update()
+        public void Execute()
         {
             Vector2 rot = look.ReadValue<Vector2>();
             _unit.LookRotate(rot.x, rot.y);

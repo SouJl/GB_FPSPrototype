@@ -13,6 +13,8 @@ namespace FPS_Game
             base.Awake();
         }
 
+        public override void Execute() { }
+
         protected void DealDamage() 
         {
             TakeDamage?.Invoke(Damage);

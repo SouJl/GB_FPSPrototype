@@ -9,9 +9,9 @@ namespace FPS_Game
 
         public override BonusType BonusType => BonusType.SpeedChange;
 
-        public override void Update()
+        public override void Execute()
         {
-            base.Update();
+            base.Execute();
         }
 
         protected override void Interaction(Player player)

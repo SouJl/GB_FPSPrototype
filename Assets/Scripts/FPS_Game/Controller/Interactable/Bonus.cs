@@ -13,9 +13,9 @@ namespace FPS_Game
 
         public event Action<Bonus> AddBonus = delegate(Bonus bonus) { };
 
-        public override void Update()
+        public override void Execute()
         {
-            base.Update();
+            base.Execute();
         }
 
         protected override void Interaction(Player player)

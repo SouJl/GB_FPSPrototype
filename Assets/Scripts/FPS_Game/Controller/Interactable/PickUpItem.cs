@@ -31,7 +31,7 @@ namespace FPS_Game
             MinFlyHeight = transform.position.y;
         }
 
-        public virtual void Update()
+        public override void Execute()
         {
             Fly();
             Rotate();
