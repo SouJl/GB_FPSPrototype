@@ -1,9 +1,8 @@
 using FPS_Game.UI;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using FPS_Game.MVC;
 
 namespace FPS_Game
 {
@@ -27,7 +26,11 @@ namespace FPS_Game
         private HealthBarManager _healthBarManager;
         private ScoreManager _scoreManager;
         private GameOverManager _gameOverManager;
-        
+
+        /*MVC test*/
+        [SerializeField] private HasteView hasteView;
+        private HasteModel hasteModel;
+        private InteractableController InteractableController;
 
         private float _gameScore;
 
@@ -53,7 +56,10 @@ namespace FPS_Game
             {
                 Debug.Log($"{ex} : {ex.Message}!");
                 Quit();
-            }         
+            }
+
+            hasteModel = new HasteModel(hasteView);
+            InteractableController = new InteractableController(hasteModel, hasteView);
         }
 
         private void Update()
@@ -64,6 +70,9 @@ namespace FPS_Game
                 tmp.Execute();
             }
             _executeUpdate.Reset();
+
+
+            hasteModel.Execute();
         }
 
         private void LateUpdate()
