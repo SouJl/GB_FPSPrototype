@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FPS_Game.MVC
 {
-    public abstract class BonusModel : AbstractPickUpItemModel
+    public class BonusModel : AbstractPickUpItemModel
     { 
         private float _bonusValue;
         private Sprite _icon;
@@ -13,14 +13,33 @@ namespace FPS_Game.MVC
         public Sprite Icon { get => _icon; set => _icon = value; }
         public float ActiveTime { get => _activeTime; set => _activeTime = value; }
 
-        public abstract BonusType BonusType { get; }
+        public BonusType Type { get; private set; }
         public event Action<BonusModel> AddBonus = delegate (BonusModel bonus) { };
 
         public BonusModel(BonusView view) : base(view) 
         {
-            BonusValue = view.BonusValue;
             Icon = view.Icon;
             ActiveTime = view.ActiveTime;
+            Type = view.Type;
+
+            switch (view) 
+            {
+                default: 
+                    {
+                        BonusValue = view.BonusValue;
+                        break;
+                    }
+                case HasteView haste: 
+                    {
+                        BonusValue = haste.SpeedUpScaler;
+                        break;
+                    }
+                case SlowView slow:
+                    {
+                        BonusValue = slow.SlowScale;
+                        break;
+                    }
+            }
         }
 
         public override void Execute()

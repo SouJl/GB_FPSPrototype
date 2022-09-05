@@ -85,25 +85,10 @@ namespace FPS_Game
             if (CurrentHealth <= 0) GameOver?.Invoke(false);
         }
 
-        public void AddBonus(Bonus bonus)
-        {
-            if (!bonus) return;
-            switch (bonus.BonusType)
-            {
-                case BonusType.SpeedChange:
-                    {
-                        _prevSpeed = CurrentSpeed;
-                        CurrentSpeed *= bonus.bonusValue;
-                        break;
-                    }
-            }
-            StartCoroutine(ActiveBonusDelay(bonus));
-        }
-
         public void AddBonus(BonusModel bonus)
         {
             if (bonus == null) return;
-            switch (bonus.BonusType)
+            switch (bonus.Type)
             {
                 case BonusType.SpeedChange:
                     {
@@ -118,7 +103,7 @@ namespace FPS_Game
         IEnumerator ActiveBonusDelay(BonusModel bonus)
         {
             yield return new WaitForSeconds(bonus.ActiveTime);
-            switch (bonus.BonusType)
+            switch (bonus.Type)
             {
                 case BonusType.SpeedChange:
                     {
@@ -127,20 +112,6 @@ namespace FPS_Game
                     }
             }
         }
-
-        IEnumerator ActiveBonusDelay(Bonus bonus)
-        {
-            yield return new WaitForSeconds(bonus.activeTime);
-            switch (bonus.BonusType)
-            {
-                case BonusType.SpeedChange:
-                    {
-                        CurrentSpeed = _prevSpeed;
-                        break;
-                    }
-            }
-        }
-
     }
 }
 

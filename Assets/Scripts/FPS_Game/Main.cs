@@ -106,21 +106,26 @@ namespace FPS_Game
         private AbstractInteractModel Fabric(InteractView interactView)
         {
             AbstractInteractModel interact = null;
-            if (interactView is HasteView haste)
+            switch (interactView) 
             {
-                var hasteModel = new HasteModel(haste);
-                hasteModel.AddBonus += _player.AddBonus;
-                hasteModel.AddBonus += _bonusBarManager.AddBonus;
-                interact = hasteModel;
-      
+                case BonusView bonus: 
+                    {
+                        var bonusModel = new BonusModel(bonus);
+                        bonusModel.AddBonus += _player.AddBonus;
+                        bonusModel.AddBonus += _bonusBarManager.AddBonus;
+                        interact = bonusModel;
+                        break;
+                    }
+                case AidKitView aidKit: 
+                    {
+                        var aidKitModel = new AidKitModel(aidKit);
+                        aidKitModel.Heal += _player.Heal;
+                        interact = aidKitModel;
+                        break;
+                    }
+
             }
-            if(interactView is SlowView slow) 
-            {
-                var slowModel = new SlowModel(slow);
-                slowModel.AddBonus += _player.AddBonus;
-                slowModel.AddBonus += _bonusBarManager.AddBonus;
-                interact = slowModel;
-            }
+ 
 
             return interact;
         }
