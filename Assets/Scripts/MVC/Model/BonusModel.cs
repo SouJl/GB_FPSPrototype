@@ -14,6 +14,7 @@ namespace FPS_Game.MVC
         public float ActiveTime { get => _activeTime; set => _activeTime = value; }
 
         public abstract BonusType BonusType { get; }
+        public event Action<BonusModel> AddBonus = delegate (BonusModel bonus) { };
 
         public BonusModel(BonusView view) : base(view) 
         {
@@ -29,7 +30,12 @@ namespace FPS_Game.MVC
 
         public override void Interaction(Collider collider)
         {
-            throw new NotImplementedException();
+            if (collider.CompareTag("Player")) 
+            {
+                Debug.Log($"Interact with {this}");
+                AddBonus?.Invoke(this);
+                IsActive = false;
+            }
         }
     }
 }

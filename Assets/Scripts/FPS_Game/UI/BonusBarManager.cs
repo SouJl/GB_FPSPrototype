@@ -1,3 +1,4 @@
+using FPS_Game.MVC;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,11 @@ namespace FPS_Game.UI
             StartCoroutine(BonusTimer(bonus));
         }
 
+        public void AddBonus(BonusModel bonus)
+        {
+            StartCoroutine(BonusTimer(bonus));
+        }
+
         IEnumerator BonusTimer(Bonus bonus) 
         {
             float timeLeft = bonus.activeTime;
@@ -34,6 +40,19 @@ namespace FPS_Game.UI
             ResetUI();
         }
 
+        IEnumerator BonusTimer(BonusModel bonus)
+        {
+            float timeLeft = bonus.ActiveTime;
+            iconImage.enabled = true;
+            iconImage.sprite = bonus.Icon;
+            while (timeLeft > 0)
+            {
+                counterText.text = $"{Mathf.FloorToInt(timeLeft % 60)}";
+                timeLeft -= Time.deltaTime;
+                yield return null;
+            }
+            ResetUI();
+        }
 
         private void ResetUI() 
         {

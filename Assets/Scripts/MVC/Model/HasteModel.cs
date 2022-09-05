@@ -13,6 +13,7 @@ namespace FPS_Game.MVC
         public HasteModel(HasteView view): base(view)
         {
             SpeedUpScaler = view.SpeedUpScaler;
+            BonusValue = SpeedUpScaler;
         }
 
         public override void Execute()

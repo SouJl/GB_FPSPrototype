@@ -1,3 +1,4 @@
+using FPS_Game.MVC;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -97,6 +98,34 @@ namespace FPS_Game
                     }
             }
             StartCoroutine(ActiveBonusDelay(bonus));
+        }
+
+        public void AddBonus(BonusModel bonus)
+        {
+            if (bonus == null) return;
+            switch (bonus.BonusType)
+            {
+                case BonusType.SpeedChange:
+                    {
+                        _prevSpeed = CurrentSpeed;
+                        CurrentSpeed *= bonus.BonusValue;
+                        break;
+                    }
+            }
+            StartCoroutine(ActiveBonusDelay(bonus));
+        }
+
+        IEnumerator ActiveBonusDelay(BonusModel bonus)
+        {
+            yield return new WaitForSeconds(bonus.ActiveTime);
+            switch (bonus.BonusType)
+            {
+                case BonusType.SpeedChange:
+                    {
+                        CurrentSpeed = _prevSpeed;
+                        break;
+                    }
+            }
         }
 
         IEnumerator ActiveBonusDelay(Bonus bonus)

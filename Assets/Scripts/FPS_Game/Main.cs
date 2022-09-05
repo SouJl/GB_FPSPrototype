@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using FPS_Game.MVC;
+using System.Collections.Generic;
 
 namespace FPS_Game
 {
@@ -28,9 +29,8 @@ namespace FPS_Game
         private GameOverManager _gameOverManager;
 
         /*MVC test*/
-        [SerializeField] private HasteView hasteView;
-        private HasteModel hasteModel;
-        private InteractableController InteractableController;
+        [SerializeField] private InteractView[] itemViews;
+        private InteractableController _interactableController;
 
         private float _gameScore;
 
@@ -57,9 +57,6 @@ namespace FPS_Game
                 Debug.Log($"{ex} : {ex.Message}!");
                 Quit();
             }
-
-            hasteModel = new HasteModel(hasteView);
-            InteractableController = new InteractableController(hasteModel, hasteView);
         }
 
         private void Update()
@@ -70,9 +67,6 @@ namespace FPS_Game
                 tmp.Execute();
             }
             _executeUpdate.Reset();
-
-
-            hasteModel.Execute();
         }
 
         private void LateUpdate()
@@ -91,33 +85,15 @@ namespace FPS_Game
         {
             try
             {
-                if (interactItems.Length == 0) throw new NoItemExeception("ѕоследовательность не содержит елементов", "interactItems");
+                if (itemViews.Length == 0) throw new NoItemExeception("ѕоследовательность не содержит елементов", "interactItems");
 
-                for (int i = 0; i < interactItems.Length; i++)
+                _interactableController = new InteractableController();
+                for (int i = 0; i < itemViews.Length; i++)
                 {
-                    interactItems[i].gameObject.SetActive(true);
-                    interactItems[i].IsActive = true;
-
-                    if (interactItems[i] is Bonus bonus)
-                    {
-                        bonus.AddBonus += _player.AddBonus;
-                        bonus.AddBonus += _bonusBarManager.AddBonus;
-                    }
-                    if (interactItems[i] is AidKit aidKit)
-                    {
-                        aidKit.Heal += _player.Heal;
-                    }
-                    if (interactItems[i] is Trap trap)
-                    {
-                        trap.TakeDamage += _player.TakeDamage;
-                    }
-                    if (interactItems[i] is IPoint point)
-                    {
-                        point.AddPoint += AddPoints;
-                        point.AddPoint += _scoreManager.AddPoints;
-                    }
-
-                    _executeUpdate.AddExecuteObject(interactItems[i]);
+                    itemViews[i].gameObject.SetActive(true);
+                    var model = Fabric(itemViews[i]);
+                    _executeUpdate.AddExecuteObject(model);
+                    _interactableController.AddControllerObject(new InteractableController(model, itemViews[i]));
                 }
             }
             catch(NoItemExeception ex)
@@ -125,6 +101,28 @@ namespace FPS_Game
                 Debug.LogWarning($"Main: {ex.Message}; source - {ex.SourceName}");
             }
            
+        }
+
+        private AbstractInteractModel Fabric(InteractView interactView)
+        {
+            AbstractInteractModel interact = null;
+            if (interactView is HasteView haste)
+            {
+                var hasteModel = new HasteModel(haste);
+                hasteModel.AddBonus += _player.AddBonus;
+                hasteModel.AddBonus += _bonusBarManager.AddBonus;
+                interact = hasteModel;
+      
+            }
+            if(interactView is SlowView slow) 
+            {
+                var slowModel = new SlowModel(slow);
+                slowModel.AddBonus += _player.AddBonus;
+                slowModel.AddBonus += _bonusBarManager.AddBonus;
+                interact = slowModel;
+            }
+
+            return interact;
         }
 
         private void AddPoints(float value)

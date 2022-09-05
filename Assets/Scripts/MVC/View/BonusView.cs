@@ -12,6 +12,5 @@ namespace FPS_Game.MVC
         public float BonusValue { get => _bonusValue; set => _bonusValue = value; }
         public Sprite Icon { get => _icon; set => _icon = value; }
         public float ActiveTime { get => _activeTime; set => _activeTime = value; }
-
     }
 }
