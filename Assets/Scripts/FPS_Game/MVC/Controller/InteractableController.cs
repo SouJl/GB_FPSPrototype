@@ -2,14 +2,6 @@
 
 namespace FPS_Game.MVC
 {
-    public enum InteractType
-    {
-        None,
-        PickUp,
-        Bonus,
-        Trap
-    }
-
     public class InteractableController
     {
         private InteractableController[] _interactController;

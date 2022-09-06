@@ -16,28 +16,10 @@ namespace FPS_Game.UI
             ResetUI();
         }
 
-        public void AddBonus(Bonus bonus)
-        {
-            StartCoroutine(BonusTimer(bonus));
-        }
 
         public void AddBonus(BonusModel bonus)
         {
             StartCoroutine(BonusTimer(bonus));
-        }
-
-        IEnumerator BonusTimer(Bonus bonus) 
-        {
-            float timeLeft = bonus.activeTime;
-            iconImage.enabled = true;
-            iconImage.sprite = bonus.icon;
-            while (timeLeft > 0)
-            {    
-                counterText.text = $"{Mathf.FloorToInt(timeLeft % 60)}";
-                timeLeft -= Time.deltaTime;
-                yield return null;
-            }
-            ResetUI();
         }
 
         IEnumerator BonusTimer(BonusModel bonus)

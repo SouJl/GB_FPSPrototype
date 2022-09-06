@@ -29,7 +29,6 @@ namespace FPS_Game
         private ScoreManager _scoreManager;
         private GameOverManager _gameOverManager;
 
-
         private float _gameScore;
 
         private void Awake()
@@ -86,12 +85,12 @@ namespace FPS_Game
                 if (itemViews.Length == 0) throw new NoItemExeception("ѕоследовательность не содержит елементов", "interactItems");
 
                 _interactableController = new InteractableController();
-                for (int i = 0; i < itemViews.Length; i++)
+                foreach(var itemView in itemViews)
                 {
-                    itemViews[i].gameObject.SetActive(true);
-                    var model = Fabric(itemViews[i]);
+                    itemView.gameObject.SetActive(true);
+                    var model = Fabric(itemView);
                     _executeUpdate.AddExecuteObject(model);
-                    _interactableController.AddControllerObject(new InteractableController(model, itemViews[i]));
+                    _interactableController.AddControllerObject(new InteractableController(model, itemView));
                 }
             }
             catch(NoItemExeception ex)
