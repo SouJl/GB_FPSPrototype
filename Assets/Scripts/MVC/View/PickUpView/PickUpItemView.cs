@@ -14,6 +14,7 @@ namespace FPS_Game.MVC
         private void OnTriggerEnter(Collider other)
         {
             Interaction(other);
+            gameObject.SetActive(false);
         }
     }
 }

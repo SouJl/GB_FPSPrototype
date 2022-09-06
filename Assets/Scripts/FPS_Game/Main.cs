@@ -116,6 +116,14 @@ namespace FPS_Game
                         interact = bonusModel;
                         break;
                     }
+                case GamePointView gamePoint:
+                    {
+                        var gamePointModel = new GamePointModel(gamePoint);
+                        gamePointModel.AddPoint += AddPoints;
+                        gamePointModel.AddPoint += _scoreManager.AddPoints;
+                        interact = gamePointModel;
+                        break;
+                    }
                 case AidKitView aidKit: 
                     {
                         var aidKitModel = new AidKitModel(aidKit);
