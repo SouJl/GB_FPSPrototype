@@ -22,9 +22,8 @@ namespace FPS_Game.MVC
         {
             if (collider.CompareTag("Player"))
             {
-                Debug.Log($"Interact with {this}");
+                Debug.Log($"Take damage from {this}");
                 OnDamage?.Invoke(Damage);
-                IsActive = false;
             }
         }
     }

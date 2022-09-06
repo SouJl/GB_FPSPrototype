@@ -10,5 +10,10 @@ namespace FPS_Game.MVC
 
         public float RotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
         public float FlyHeight { get => _flyHeight; set => _flyHeight = value; }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Interaction(other);
+        }
     }
 }

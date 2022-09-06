@@ -12,15 +12,9 @@ namespace FPS_Game.MVC
             base.Awake();
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            Interaction(other);
-        }
-
         protected virtual void Interaction(Collider other)
         {
             Interact?.Invoke(other);
-            gameObject.SetActive(false);
         }
     }
 }

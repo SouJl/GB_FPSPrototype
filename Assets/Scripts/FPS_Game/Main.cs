@@ -123,7 +123,13 @@ namespace FPS_Game
                         interact = aidKitModel;
                         break;
                     }
-
+                case TrapView trap: 
+                    {
+                        var trapModel = new TrapModel(trap);
+                        trapModel.OnDamage += _player.TakeDamage;
+                        interact = trapModel;
+                        break;
+                    }
             }
  
 

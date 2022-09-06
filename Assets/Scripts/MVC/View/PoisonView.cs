@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace FPS_Game.MVC
 {
@@ -17,9 +18,24 @@ namespace FPS_Game.MVC
             _isOnPoisen = false;
         }
 
-        protected override void Interaction(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
-            
+            _isOnPoisen = true;
+            StartCoroutine(PoisonTick(TickTime, other));
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            _isOnPoisen = false;
+        }
+
+        private IEnumerator PoisonTick(float time, Collider collider)
+        {
+            while (_isOnPoisen)
+            {
+                Interaction(collider);
+                yield return new WaitForSeconds(time);
+            }
         }
 
     }
