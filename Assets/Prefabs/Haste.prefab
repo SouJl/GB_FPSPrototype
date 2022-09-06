@@ -808,7 +808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1414038831493902209}
   - component: {fileID: 6746172811017896549}
-  - component: {fileID: 907102579780143359}
+  - component: {fileID: 8183579025370715126}
   m_Layer: 0
   m_Name: Haste
   m_TagString: Untagged
@@ -846,7 +846,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &907102579780143359
+--- !u!114 &8183579025370715126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -855,12 +855,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414038831493902334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79797d092b7b9f644ba91e41f091b0b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f126f15bdcb8cf498a2770c798c487e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusValue: 0
-  icon: {fileID: 0}
-  activeTime: 5
+  _transform: {fileID: 0}
+  _collider: {fileID: 0}
   _rotateSpeed: 0
   _flyHeight: 0
+  _bonusValue: 0
+  _icon: {fileID: 0}
+  _activeTime: 5
+  _type: 0
   speedUpScaler: 2

@@ -11,13 +11,14 @@ namespace FPS_Game
     {
         [SerializeField] private float _gameGoal = 500;
         [SerializeField] private Player _player;
-        [SerializeField] private Interactable[] interactItems;
+        [SerializeField] private InteractView[] itemViews;
         [SerializeField] private Button _restartButton;
 
         private PlayerInput inputSystem;
 
         private MoveController _moveController;
         private LookController _lookController;
+        private InteractableController _interactableController;
 
         private ListExecuteController _executeUpdate;
         private ListExecuteController _executeLateUpdate;
@@ -28,9 +29,6 @@ namespace FPS_Game
         private ScoreManager _scoreManager;
         private GameOverManager _gameOverManager;
 
-        /*MVC test*/
-        [SerializeField] private InteractView[] itemViews;
-        private InteractableController _interactableController;
 
         private float _gameScore;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6298749465537500429}
   - component: {fileID: 6902619052412453628}
   - component: {fileID: 4911894351175850838}
-  - component: {fileID: 1079697358806530785}
+  - component: {fileID: 1018613220540571518}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1079697358806530785
+--- !u!114 &1018613220540571518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 561681073019970367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27fa4c8a37f94d41b0ecf1379504fd4, type: 3}
+  m_Script: {fileID: 11500000, guid: c3500c908fbb5d146b7c089ffa7ec31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealAmount: 30
+  _transform: {fileID: 0}
+  _collider: {fileID: 0}
+  _rotateSpeed: 0
+  _flyHeight: 0
+  _healAmount: 30
