@@ -10,15 +10,17 @@ namespace FPS_Game
     public class Main : MonoBehaviour
     {
         [SerializeField] private float _gameGoal = 500;
-        [SerializeField] private Player _player;
+        [SerializeField] private GameObject _playerObject;
         [SerializeField] private InteractView[] itemViews;
         [SerializeField] private Button _restartButton;
 
+        private Player _player;
+        private Camera _camera;
         private PlayerInput inputSystem;
 
         private MoveController _moveController;
-        private LookController _lookController;
         private InteractableController _interactableController;
+        private CameraController _cameraController;
 
         private ListExecuteController _executeUpdate;
         private ListExecuteController _executeLateUpdate;
@@ -34,6 +36,10 @@ namespace FPS_Game
         private void Awake()
         {
             _gameScore = 0;
+
+            _player = _playerObject.GetComponent<Player>();
+            _camera = _player.playerCamera;
+
             try 
             {
                 if (!_player) throw new PlayerNotFoundExeption("Объект Player не задан");
@@ -175,8 +181,8 @@ namespace FPS_Game
             _moveController = new MoveController(inputSystem, _player);
             _executeUpdate.AddExecuteObject(_moveController);
 
-            _lookController = new LookController(inputSystem, _player);
-            _executeLateUpdate.AddExecuteObject(_lookController);
+            _cameraController = new CameraController(_player.transform, _camera.transform, inputSystem, (_player.xSensitivity, _player.ySensitivity));
+            _executeLateUpdate.AddExecuteObject(_cameraController);
         }
 
         private void InitUIComponents()
