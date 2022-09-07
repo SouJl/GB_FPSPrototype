@@ -13,6 +13,10 @@ namespace FPS_Game.MVC
         [SerializeField] private Camera _camera;
         [SerializeField] private float _xSensitivity = 30f;
         [SerializeField] private float _ySensitivity = 30f;
+        
+        [Header("Health settings: Player")]
+        [SerializeField] private float _maxHealth = 100f;
+        [SerializeField] private bool isInvincible = false;
 
         private CharacterController _controller;
 
@@ -22,6 +26,7 @@ namespace FPS_Game.MVC
         public Camera Camera { get => _camera; set => _camera = value; }
         public float XSensitivity { get => _xSensitivity; set => _xSensitivity = value; }
         public float YSensitivity { get => _ySensitivity; set => _ySensitivity = value; }
+        public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         public CharacterController Controller { get => _controller; set => _controller = value; }
 
         protected override void Awake()

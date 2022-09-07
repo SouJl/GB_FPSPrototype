@@ -10,11 +10,11 @@ namespace FPS_Game.MVC
         private float _currentHealth;
 
         public Transform Transform { get => _transform; set => _transform = value; }
-        
-        public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
-        
+
         public float CurrentSpeed { get => _currentSpeed; set => _currentSpeed = value; }
-        
+
+        public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+          
         public float CurrentHealth 
         { 
             get => _currentHealth; 

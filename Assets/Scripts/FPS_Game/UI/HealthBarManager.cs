@@ -1,31 +1,32 @@
+using FPS_Game.MVC;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace FPS_Game.UI
 {
-    public class HealthBarManager : MonoBehaviour
+    public class HealthBarManager: IExecute
     {
-        public Image healthBarFill;
+        private Image _healthBarFill;
+        private PlayerModel _playerModel;
 
-        private Player playerController;
-
-        private void Start()
-        {
-            playerController = FindObjectOfType<Player>();
-            try 
+        public HealthBarManager(PlayerModel playerModel, Image healthBarFill)
+        {         
+            try
             {
-                healthBarFill.fillAmount = playerController.CurrentHealth / playerController.maxHealth;
+                _playerModel = playerModel;
+                _healthBarFill = healthBarFill;
             }
-            catch(System.NullReferenceException ex) 
+            catch (System.NullReferenceException ex)
             {
-                Debug.LogException(ex, this);
+                Debug.LogException(ex);
             }
         }
 
-        private void Update()
+        public void Execute()
         {
-            healthBarFill.fillAmount = playerController.CurrentHealth / playerController.maxHealth;
+            _healthBarFill.fillAmount = _playerModel.CurrentHealth / _playerModel.MaxHealth;
         }
+
     }
 }
 

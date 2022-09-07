@@ -3,22 +3,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using FPS_Game.MVC;
-using System.Collections.Generic;
 
 namespace FPS_Game
 {
     public class Main : MonoBehaviour
     {
         [SerializeField] private float _gameGoal = 500;
-        [SerializeField] private GameObject _playerObject;
+        [SerializeField] private PlayerView _playerView;
         [SerializeField] private InteractView[] itemViews;
         [SerializeField] private Button _restartButton;
+        [SerializeField] private Image _healthBar;
 
-        private Player _player;
+        private PlayerModel _playerModel;
         private Camera _camera;
         private PlayerInput inputSystem;
 
-        private MoveController _moveController;
+        private PlayerController _playerController;
         private InteractableController _interactableController;
         private CameraController _cameraController;
 
@@ -37,19 +37,20 @@ namespace FPS_Game
         {
             _gameScore = 0;
 
-            _player = _playerObject.GetComponent<Player>();
-            _camera = _player.playerCamera;
-
             try 
             {
-                if (!_player) throw new PlayerNotFoundExeption("Объект Player не задан");
+                if (!_playerView) throw new PlayerNotFoundExeption("Объект Player не задан");
 
                 inputSystem = new PlayerInput();
+
+                _camera = _playerView.Camera;
+                _playerModel = new PlayerModel(_playerView);
+
                 InitExecuteObjects();
                 InitUIComponents();
-          
-                _player.GameOver += GameOver;
-                _player.GameOver += _gameOverManager.GameOver;
+
+                _playerModel.GameOver += GameOver;
+                _playerModel.GameOver += _gameOverManager.GameOver;
 
                 SpawnBonus();
 
@@ -114,7 +115,7 @@ namespace FPS_Game
                 case BonusView bonus: 
                     {
                         var bonusModel = new BonusModel(bonus);
-                        bonusModel.AddBonus += _player.AddBonus;
+                       // bonusModel.AddBonus += _player.AddBonus;
                         bonusModel.AddBonus += _bonusBarManager.AddBonus;
                         interact = bonusModel;
                         break;
@@ -130,14 +131,14 @@ namespace FPS_Game
                 case AidKitView aidKit: 
                     {
                         var aidKitModel = new AidKitModel(aidKit);
-                        aidKitModel.Heal += _player.Heal;
+                        aidKitModel.Heal += _playerModel.Heal;
                         interact = aidKitModel;
                         break;
                     }
                 case TrapView trap: 
                     {
                         var trapModel = new TrapModel(trap);
-                        trapModel.OnDamage += _player.TakeDamage;
+                        trapModel.OnDamage += _playerModel.TakeDamage;
                         interact = trapModel;
                         break;
                     }
@@ -178,18 +179,21 @@ namespace FPS_Game
             _executeUpdate = new ListExecuteController();
             _executeLateUpdate = new ListExecuteController();
 
-            _moveController = new MoveController(inputSystem, _player);
-            _executeUpdate.AddExecuteObject(_moveController);
+            _playerController = new PlayerController(_playerModel, inputSystem);
+            _executeUpdate.AddExecuteObject(_playerController);
 
-            _cameraController = new CameraController(_player.transform, _camera.transform, inputSystem, (_player.xSensitivity, _player.ySensitivity));
+            _cameraController = new CameraController(_playerView.Transform, _camera.transform, inputSystem, (_playerView.XSensitivity, _playerView.YSensitivity));
             _executeLateUpdate.AddExecuteObject(_cameraController);
         }
 
         private void InitUIComponents()
         {
             _bonusBarManager = GetComponentInChildren<BonusBarManager>();
-            _healthBarManager = GetComponentInChildren<HealthBarManager>();
-            _scoreManager = GetComponentInChildren<ScoreManager>();
+            
+            _healthBarManager = new HealthBarManager(_playerModel, _healthBar);
+            _executeUpdate.AddExecuteObject(_healthBarManager);
+
+             _scoreManager = GetComponentInChildren<ScoreManager>();
             _gameOverManager = GetComponentInChildren<GameOverManager>();
 
             _restartButton.onClick.AddListener(RestartGame);
