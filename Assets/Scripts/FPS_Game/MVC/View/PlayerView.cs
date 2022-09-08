@@ -8,6 +8,7 @@ namespace FPS_Game.MVC
         [SerializeField] private float _speed;
         [SerializeField] private float _gravity = 9.81f;
         [SerializeField] private float _jumpHeight = 3f;
+        [SerializeField] private CharacterController _controller;
 
         [Header("Look settings")]
         [SerializeField] private Camera _camera;
@@ -18,7 +19,6 @@ namespace FPS_Game.MVC
         [SerializeField] private float _maxHealth = 100f;
         [SerializeField] private bool isInvincible = false;
 
-        private CharacterController _controller;
 
         public float Speed { get => _speed; set => _speed = value; }
         public float Gravity { get => _gravity; set => _gravity = value; }
@@ -32,7 +32,6 @@ namespace FPS_Game.MVC
         protected override void Awake()
         {
             base.Awake();
-            Controller = GetComponent<CharacterController>();
         }
 
     }

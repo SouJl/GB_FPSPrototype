@@ -66,5 +66,38 @@ namespace FPS_Game.MVC
             CurrentHealth -= value;
             if (CurrentHealth <= 0) GameOver?.Invoke(false);
         }
+
+        private BonusModel _activeBonus;
+
+        public void AddBonus(BonusModel bonus)
+        {
+            if (bonus == null) return;
+            switch (bonus.Type)
+            {
+                case BonusType.SpeedChange:
+                    {
+                        _prevSpeed = CurrentSpeed;
+                        CurrentSpeed *= bonus.BonusValue;
+                        break;
+                    }
+            }
+            _activeBonus = bonus;
+        }
+
+        public void RemoveBonus(bool isdone)
+        {
+            if (isdone)
+            {
+                switch (_activeBonus.Type)
+                {
+                    case BonusType.SpeedChange:
+                        {
+                            CurrentSpeed = _prevSpeed;
+                            break;
+                        }
+                }
+            }
+        }
+
     }
 }
