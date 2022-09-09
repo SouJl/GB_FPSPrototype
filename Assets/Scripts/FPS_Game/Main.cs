@@ -117,9 +117,6 @@ namespace FPS_Game
                         var bonusModel = new BonusModel(bonus);
                         
                         bonusModel.AddBonus += _playerModel.AddBonus;
-                        BonusProcessCounter.Instance.DoneCallBack += _playerModel.RemoveBonus;
-                        bonusModel.AddBonus += BonusProcessCounter.Instance.AddBonus;
-
                         bonusModel.AddBonus += _bonusBarManager.AddBonus;
                         interact = bonusModel;
                         break;

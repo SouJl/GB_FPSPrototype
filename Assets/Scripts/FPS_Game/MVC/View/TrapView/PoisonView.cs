@@ -10,28 +10,28 @@ namespace FPS_Game.MVC
         
         public float TickTime { get => _tickTime; set => _tickTime = value; }
 
-        private bool _isOnPoisen;
+        private bool _isStay;
 
         protected override void Awake()
         {
             base.Awake();
-            _isOnPoisen = false;
+            _isStay = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            _isOnPoisen = true;
+            _isStay = true;
             StartCoroutine(PoisonTick(TickTime, other));
         }
 
         private void OnTriggerExit(Collider other)
         {
-            _isOnPoisen = false;
+            _isStay = false;
         }
 
         private IEnumerator PoisonTick(float time, Collider collider)
         {
-            while (_isOnPoisen)
+            while (_isStay)
             {
                 Interaction(collider);
                 yield return new WaitForSeconds(time);

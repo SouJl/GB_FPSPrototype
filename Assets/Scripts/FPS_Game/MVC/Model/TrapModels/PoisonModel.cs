@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace FPS_Game.MVC
+﻿namespace FPS_Game.MVC
 {
     public class PoisonModel:TrapModel
     {
@@ -13,5 +10,7 @@ namespace FPS_Game.MVC
         {
             TickTime = view.TickTime;
         }
+
+
     }
 }

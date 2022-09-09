@@ -82,6 +82,7 @@ namespace FPS_Game.MVC
                     }
             }
             _activeBonus = bonus;
+            CoroutineProcesses.Instance.WaitDelayCallBack(_activeBonus.ActiveTime, RemoveBonus);
         }
 
         public void RemoveBonus(bool isdone)
@@ -96,6 +97,7 @@ namespace FPS_Game.MVC
                             break;
                         }
                 }
+                _activeBonus = null;
             }
         }
 
