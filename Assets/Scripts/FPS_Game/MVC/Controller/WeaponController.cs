@@ -27,8 +27,29 @@ namespace FPS_Game.MVC
             _reload.performed += rld => _weapon.Reload();
 
             data = new ToSerializeXMLData<WeaponData>(Application.persistentDataPath + "/WeaponData.xml");
+
+            OnEnable();
         }
 
-        public void Execute() { }
+        public void Execute() 
+        {
+            _weapon.TimeBeforeShoot += Time.deltaTime;
+        }
+
+        private void OnEnable()
+        {
+            _fire.Enable();
+            _reload.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _fire.Disable();
+            _reload.Disable();
+        }
+
+        ~WeaponController() => OnDisable();
     }
+
 }
+

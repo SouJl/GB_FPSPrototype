@@ -13,6 +13,7 @@ namespace FPS_Game
         [SerializeField] private InteractView[] itemViews;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Image _healthBar;
+        [SerializeField] private WeaponView _weaponView;
 
         private PlayerModel _playerModel;
         private Camera _camera;
@@ -24,6 +25,9 @@ namespace FPS_Game
 
         private ListExecuteController _executeUpdate;
         private ListExecuteController _executeLateUpdate;
+
+        private BaseWeapon CurrentWeapon;
+        private WeaponController _weaponController;
 
         /*UI components*/
         private BonusBarManager _bonusBarManager;
@@ -185,6 +189,10 @@ namespace FPS_Game
 
             _cameraController = new CameraController(_playerView.Transform, _camera.transform, inputSystem, (_playerView.XSensitivity, _playerView.YSensitivity));
             _executeLateUpdate.AddExecuteObject(_cameraController);
+
+            CurrentWeapon = new AssaltRifle(_weaponView);
+            _weaponController = new WeaponController(CurrentWeapon, inputSystem);
+            _executeUpdate.AddExecuteObject(_weaponController);
         }
 
         private void InitUIComponents()

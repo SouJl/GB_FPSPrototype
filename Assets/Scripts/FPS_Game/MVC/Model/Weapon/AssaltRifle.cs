@@ -1,22 +1,52 @@
 ﻿using System;
+using UnityEngine;
 
 namespace FPS_Game.MVC
 {
     public class AssaltRifle : BaseWeapon
     {
-        public AssaltRifle()
+
+        public AssaltRifle(WeaponView view) : base(view)
         {
 
         }
+
+        private bool CanShoot() => !IsReloading && TimeBeforeShoot > 1f / (FireRate / 60f);
+        
+        public override void Shoot()
+        {
+            if(CurrentAmmo > 0 && CanShoot())
+            {
+                if(Physics.Raycast(Muzzle.position, Muzzle.forward, out RaycastHit hitinfo, Distance))
+                {
+                    Debug.Log(hitinfo.transform.name);
+                }
+
+                CurrentAmmo--;
+                TimeBeforeShoot = 0;
+
+            }
+        }
+
 
         public override void Reload()
         {
-            throw new NotImplementedException();
+            if (!IsReloading)
+            {
+                ReloadStart();
+            }
         }
 
-        public override void Shoot()
+        private void ReloadStart()
         {
-            throw new NotImplementedException();
+            IsReloading = true;
+            CoroutineProcesses.Instance.WaitDelayCallBack(ReloadTime, ReloadEnd);
+        }
+
+        private void ReloadEnd(bool state)
+        {
+            CurrentAmmo = MagSize;
+            IsReloading = false;
         }
     }
 }
