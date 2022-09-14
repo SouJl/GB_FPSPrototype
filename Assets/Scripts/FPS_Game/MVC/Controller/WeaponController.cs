@@ -1,5 +1,4 @@
-﻿using FPS_Game.Data;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace FPS_Game.MVC
@@ -13,8 +12,6 @@ namespace FPS_Game.MVC
         private InputAction _fire;
         private InputAction _reload;
 
-        private ToSerializeXMLData<WeaponData> data;
-
         public WeaponController(BaseWeapon weapon, PlayerInput inputSys)
         {
             _weapon = weapon;
@@ -25,8 +22,6 @@ namespace FPS_Game.MVC
 
             _fire.performed +=  fire => _weapon.Shoot();
             _reload.performed += rld => _weapon.Reload();
-
-            data = new ToSerializeXMLData<WeaponData>(Application.persistentDataPath + "/WeaponData.xml");
 
             OnEnable();
         }

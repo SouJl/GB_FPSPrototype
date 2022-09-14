@@ -182,6 +182,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""System"",
+            ""id"": ""b3a9ba7e-c166-4128-888e-07bf43e79076"",
+            ""actions"": [
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""131f5ec1-a534-46e4-a695-018831da43f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""76ca94b3-afe2-45fc-a7c6-d7cd1d449667"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""feebe188-d058-44ac-ba4b-5c728aae9155"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb928b82-a739-4991-9d96-ea2bf27571cc"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -195,6 +243,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Fire = m_Weapon.FindAction("Fire", throwIfNotFound: true);
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
+        // System
+        m_System = asset.FindActionMap("System", throwIfNotFound: true);
+        m_System_Save = m_System.FindAction("Save", throwIfNotFound: true);
+        m_System_Load = m_System.FindAction("Load", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -340,6 +392,47 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public WeaponActions @Weapon => new WeaponActions(this);
+
+    // System
+    private readonly InputActionMap m_System;
+    private ISystemActions m_SystemActionsCallbackInterface;
+    private readonly InputAction m_System_Save;
+    private readonly InputAction m_System_Load;
+    public struct SystemActions
+    {
+        private @PlayerInput m_Wrapper;
+        public SystemActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Save => m_Wrapper.m_System_Save;
+        public InputAction @Load => m_Wrapper.m_System_Load;
+        public InputActionMap Get() { return m_Wrapper.m_System; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SystemActions set) { return set.Get(); }
+        public void SetCallbacks(ISystemActions instance)
+        {
+            if (m_Wrapper.m_SystemActionsCallbackInterface != null)
+            {
+                @Save.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnSave;
+                @Save.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnSave;
+                @Save.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnSave;
+                @Load.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnLoad;
+                @Load.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnLoad;
+                @Load.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnLoad;
+            }
+            m_Wrapper.m_SystemActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Save.started += instance.OnSave;
+                @Save.performed += instance.OnSave;
+                @Save.canceled += instance.OnSave;
+                @Load.started += instance.OnLoad;
+                @Load.performed += instance.OnLoad;
+                @Load.canceled += instance.OnLoad;
+            }
+        }
+    }
+    public SystemActions @System => new SystemActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -350,5 +443,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+    }
+    public interface ISystemActions
+    {
+        void OnSave(InputAction.CallbackContext context);
+        void OnLoad(InputAction.CallbackContext context);
     }
 }

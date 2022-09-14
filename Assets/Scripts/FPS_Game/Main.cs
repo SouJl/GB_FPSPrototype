@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using FPS_Game.MVC;
+using FPS_Game.Data;
+using System.Collections.Generic;
 
 namespace FPS_Game
 {
@@ -28,6 +30,8 @@ namespace FPS_Game
 
         private BaseWeapon CurrentWeapon;
         private WeaponController _weaponController;
+
+        private SaveGameController _saveGameController;
 
         /*UI components*/
         private BonusBarManager _bonusBarManager;
@@ -57,6 +61,24 @@ namespace FPS_Game
                 _playerModel.GameOver += _gameOverManager.GameOver;
 
                 SpawnBonus();
+
+                GameData gameData = new GameData();
+                gameData.bonuses = new List<SaveObjectData<BonusData>>();
+               
+                foreach(var item in itemViews) 
+                {
+                    if(item is BonusView bonus) 
+                    {
+                        gameData.bonuses.Add(new SaveObjectData<BonusData>
+                        {
+                            Name = bonus.name,
+                            position = bonus.transform.position,
+                            ObjectData = new BonusData(new BonusModel(bonus))                            
+                        });
+                    }
+                }
+               
+                _saveGameController = new SaveGameController(inputSystem, gameData, LoadGame);
 
                 Cursor.lockState = CursorLockMode.Locked;
             }
@@ -163,6 +185,11 @@ namespace FPS_Game
             } 
         }
 
+        private void LoadGame(GameData data)
+        {
+            Debug.Log("Game Data Load Invoke");
+        }
+
         private void GameOver(bool state) 
         {
             _restartButton.gameObject.SetActive(true);
@@ -193,6 +220,7 @@ namespace FPS_Game
             CurrentWeapon = new AssaltRifle(_weaponView);
             _weaponController = new WeaponController(CurrentWeapon, inputSystem);
             _executeUpdate.AddExecuteObject(_weaponController);
+
         }
 
         private void InitUIComponents()
