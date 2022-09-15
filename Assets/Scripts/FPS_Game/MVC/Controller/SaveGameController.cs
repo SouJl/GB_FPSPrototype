@@ -16,11 +16,11 @@ namespace FPS_Game.MVC
         private InputAction _load;
 
         private ToSerializeXMLData<GameData> _gameDataSerializer;
-        private GameData _gameData;
 
         private Action<GameData> OnLoadData;
+        private Func<GameData> OnDataRequest;
 
-        public SaveGameController(PlayerInput inputSys, GameData gameData, Action<GameData> onLoadAction)
+        public SaveGameController(PlayerInput inputSys, Func<GameData> onDataFunc, Action<GameData> onLoadAction)
         {
             _iputSystem = inputSys;
             _save = _iputSystem.System.Save;
@@ -29,12 +29,13 @@ namespace FPS_Game.MVC
             _save.performed += S => Save();
             _load.performed += L => Load();
 
-            _gameData = gameData;
 
             string path = Path.Combine(Application.dataPath, _folderName, "gamedata.xml");
             _gameDataSerializer = new ToSerializeXMLData<GameData>(path);
 
+ 
             OnLoadData = onLoadAction;
+            OnDataRequest = onDataFunc;
 
             OnEnable();
 
@@ -43,14 +44,15 @@ namespace FPS_Game.MVC
         private void Save()
         {
             Debug.Log("Game Data Save");
-            //_gameDataSerializer.Save(_gameData);
+            var gamedata = OnDataRequest?.Invoke();
+            _gameDataSerializer.Save(gamedata);
         }
 
         private void Load()
         {
-            //GameData data = _gameDataSerializer.Load();
             Debug.Log("Game Data Load");
-            OnLoadData?.Invoke(null);
+            GameData data = _gameDataSerializer.Load(); 
+            OnLoadData?.Invoke(data);
         }
 
         private void OnEnable()

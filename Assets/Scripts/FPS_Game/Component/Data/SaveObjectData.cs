@@ -1,11 +1,11 @@
 ﻿namespace FPS_Game.Data
 {
     [System.Serializable]
-    public class SaveObjectData<T>
+    public class SaveObjectData
     {
         public string Name;
         public Vector3Data position;
-        public T ObjectData;
+        public QuaternionData rotation;
         public bool IsEnable;
     }
 }

@@ -16,16 +16,16 @@ namespace FPS_Game.MVC
             private set => _interactController[curr] = value;
         }
 
-        private AbstractInteractModel _model;
+        public AbstractInteractModel Model { get; private set; }
         private InteractView _view;
 
         public InteractableController() { }
 
         public InteractableController(AbstractInteractModel model, InteractView view)
         {
-            _model = model;
+            Model = model;
             _view = view;
-            _view.Interact += _model.Interaction;
+            _view.Interact += Model.Interaction;
         }
 
         public void AddControllerObject(InteractableController controller)

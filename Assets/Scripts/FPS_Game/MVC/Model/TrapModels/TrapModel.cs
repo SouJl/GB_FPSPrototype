@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FPS_Game.MVC
 {
-    public class TrapModel:AbstractInteractModel
+    public class TrapModel: AbstractInteractModel
     {
         private float _damage;
 

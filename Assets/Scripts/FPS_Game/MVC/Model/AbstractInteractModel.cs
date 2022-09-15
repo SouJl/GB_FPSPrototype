@@ -28,9 +28,11 @@ namespace FPS_Game.MVC
             }
         }
 
+        public Transform Transform { get => _transform; set => _transform = value; }
+
         public AbstractInteractModel(BaseView view)
         {
-            _transform = view.Transform;
+            Transform = view.Transform;
             _collider = view.Collider;
             IsActive = true;
         }

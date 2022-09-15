@@ -6,6 +6,6 @@ namespace FPS_Game.Data
     [System.Serializable]
     public class GameData
     {
-        public List<SaveObjectData<BonusData>> bonuses;
+        public List<SaveObjectData> pickUpitems;
     }
 }

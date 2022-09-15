@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using FPS_Game.MVC;
 using FPS_Game.Data;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace FPS_Game
 {
@@ -32,7 +34,7 @@ namespace FPS_Game
         private WeaponController _weaponController;
 
         private SaveGameController _saveGameController;
-
+        private Action<Vector3, Quaternion, bool> pickUpLoad;
         /*UI components*/
         private BonusBarManager _bonusBarManager;
         private HealthBarManager _healthBarManager;
@@ -62,24 +64,6 @@ namespace FPS_Game
 
                 SpawnBonus();
 
-                GameData gameData = new GameData();
-                gameData.bonuses = new List<SaveObjectData<BonusData>>();
-               
-                foreach(var item in itemViews) 
-                {
-                    if(item is BonusView bonus) 
-                    {
-                        gameData.bonuses.Add(new SaveObjectData<BonusData>
-                        {
-                            Name = bonus.name,
-                            position = bonus.transform.position,
-                            ObjectData = new BonusData(new BonusModel(bonus))                            
-                        });
-                    }
-                }
-               
-                _saveGameController = new SaveGameController(inputSystem, gameData, LoadGame);
-
                 Cursor.lockState = CursorLockMode.Locked;
             }
             catch (PlayerNotFoundExeption ex) 
@@ -108,7 +92,6 @@ namespace FPS_Game
             }
             _executeLateUpdate.Reset();
         }
-
 
 
         private void SpawnBonus()
@@ -144,6 +127,7 @@ namespace FPS_Game
                         
                         bonusModel.AddBonus += _playerModel.AddBonus;
                         bonusModel.AddBonus += _bonusBarManager.AddBonus;
+                        pickUpLoad += bonusModel.LoadData;
                         interact = bonusModel;
                         break;
                     }
@@ -152,6 +136,8 @@ namespace FPS_Game
                         var gamePointModel = new GamePointModel(gamePoint);
                         gamePointModel.AddPoint += AddPoints;
                         gamePointModel.AddPoint += _scoreManager.AddPoints;
+                        pickUpLoad += gamePointModel.LoadData;
+
                         interact = gamePointModel;
                         break;
                     }
@@ -159,6 +145,7 @@ namespace FPS_Game
                     {
                         var aidKitModel = new AidKitModel(aidKit);
                         aidKitModel.Heal += _playerModel.Heal;
+                        pickUpLoad += aidKitModel.LoadData;
                         interact = aidKitModel;
                         break;
                     }
@@ -185,9 +172,42 @@ namespace FPS_Game
             } 
         }
 
+        private GameData SaveGameData()
+        {
+            var gameData = new GameData();
+            gameData.pickUpitems = new List<SaveObjectData>();
+            for(int i =0; i < _interactableController.Length; i++) 
+            {
+
+                if (_interactableController[i].Model is AbstractPickUpItemModel pickUp)
+                {
+                    gameData.pickUpitems.Add(new SaveObjectData
+                    {
+                        Name = pickUp.Name,
+                        position = pickUp.Transform.position,
+                        rotation = pickUp.Transform.rotation,
+                        IsEnable = pickUp.IsActive
+                    });
+                }
+            }
+            return gameData;
+        }
+
         private void LoadGame(GameData data)
         {
-            Debug.Log("Game Data Load Invoke");
+            foreach(var pickUpData in data.pickUpitems)
+            {
+                for (int i = 0; i < _interactableController.Length; i++) 
+                {
+                    if (_interactableController[i].Model is AbstractPickUpItemModel pickUp) 
+                    {
+                        if(pickUp.Name == pickUpData.Name)
+                        {
+                            pickUp.LoadData(pickUpData.position, pickUpData.rotation, pickUpData.IsEnable);
+                        }
+                    }
+                }
+            }
         }
 
         private void GameOver(bool state) 
@@ -220,6 +240,8 @@ namespace FPS_Game
             CurrentWeapon = new AssaltRifle(_weaponView);
             _weaponController = new WeaponController(CurrentWeapon, inputSystem);
             _executeUpdate.AddExecuteObject(_weaponController);
+
+            _saveGameController = new SaveGameController(inputSystem, SaveGameData, LoadGame);
 
         }
 
