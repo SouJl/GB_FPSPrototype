@@ -29,10 +29,22 @@ namespace FPS_Game.MVC
         public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         public CharacterController Controller { get => _controller; set => _controller = value; }
 
+        [System.NonSerialized] public Vector3 newPos = Vector3.zero;
+
+
+
         protected override void Awake()
         {
             base.Awake();
         }
 
+        private void LateUpdate()
+        {
+            if (newPos != Vector3.zero)
+            {
+                transform.position = newPos;
+                newPos = Vector3.zero;
+            }
+        }
     }
 }

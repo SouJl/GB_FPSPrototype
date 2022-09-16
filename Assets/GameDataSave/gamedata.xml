@@ -1,18 +1,33 @@
 <?xml version="1.0"?>
 <GameData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <playerData>
+    <Name>Player</Name>
+    <position>
+      <X>16.2746582</X>
+      <Y>1.20499992</Y>
+      <Z>13.2836475</Z>
+    </position>
+    <rotation>
+      <X>0</X>
+      <Y>-0.432001382</Y>
+      <Z>0</Z>
+      <W>-0.901873</W>
+    </rotation>
+    <IsEnable>true</IsEnable>
+  </playerData>
   <pickUpitems>
     <SaveObjectData>
       <Name>Slow</Name>
       <position>
         <X>27.75</X>
-        <Y>1.27927184</Y>
+        <Y>1.58407211</Y>
         <Z>26.5</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.390614</Y>
+        <Y>0.931105554</Y>
         <Z>-0</Z>
-        <W>0.9205546</W>
+        <W>0.364749819</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -20,14 +35,14 @@
       <Name>Haste</Name>
       <position>
         <X>28.6365452</X>
-        <Y>1.27927184</Y>
+        <Y>1.58407211</Y>
         <Z>11.1795349</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.390614</Y>
+        <Y>0.931105554</Y>
         <Z>-0</Z>
-        <W>0.9205546</W>
+        <W>0.364749819</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -35,14 +50,14 @@
       <Name>Health</Name>
       <position>
         <X>22.6745739</X>
-        <Y>1.27927184</Y>
+        <Y>1.58407211</Y>
         <Z>17.8662643</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.927136064</Y>
+        <Y>0.9163084</Y>
         <Z>-0</Z>
-        <W>0.3747248</W>
+        <W>-0.400473416</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -125,7 +140,7 @@
       <Name>GamePoint (5)</Name>
       <position>
         <X>66.93</X>
-        <Y>9.137464</Y>
+        <Y>12</Y>
         <Z>13.7799988</Z>
       </position>
       <rotation>

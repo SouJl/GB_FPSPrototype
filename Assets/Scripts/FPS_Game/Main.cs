@@ -175,10 +175,18 @@ namespace FPS_Game
         private GameData SaveGameData()
         {
             var gameData = new GameData();
+
+            gameData.playerData = new SaveObjectData
+            {
+                Name = _playerView.name,
+                position = _playerView.transform.position,
+                rotation = _playerView.transform.rotation,
+                IsEnable = true
+            };
+
             gameData.pickUpitems = new List<SaveObjectData>();
             for(int i =0; i < _interactableController.Length; i++) 
             {
-
                 if (_interactableController[i].Model is AbstractPickUpItemModel pickUp)
                 {
                     gameData.pickUpitems.Add(new SaveObjectData
@@ -195,7 +203,10 @@ namespace FPS_Game
 
         private void LoadGame(GameData data)
         {
-            foreach(var pickUpData in data.pickUpitems)
+            _playerView.newPos = data.playerData.position;
+            _playerView.transform.rotation = data.playerData.rotation;
+
+            foreach (var pickUpData in data.pickUpitems)
             {
                 for (int i = 0; i < _interactableController.Length; i++) 
                 {
