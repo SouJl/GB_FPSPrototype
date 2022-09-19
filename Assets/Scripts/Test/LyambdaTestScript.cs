@@ -23,7 +23,7 @@ public class LyambdaTestScript : MonoBehaviour
             Debug.Log($"{pair.Key} - {pair.Value}");
         }*/
 
-        var expandDictOdrder = new Dictionary<string, int>(dict);
+        /*var expandDictOdrder = new Dictionary<string, int>(dict);
         var shortDictOdrder = new Dictionary<string, int>(dict);
        
         int GetPairValue(KeyValuePair<string, int> pair) => pair.Value;
@@ -38,6 +38,6 @@ public class LyambdaTestScript : MonoBehaviour
         foreach (var pair in shortDictOdrder.OrderBy(pair => pair.Value).ToArray())
         {
             Debug.Log($"{pair.Key} - {pair.Value}");
-        }
+        }*/
     }
 }

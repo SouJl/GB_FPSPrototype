@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FPS_Game.Data
 {
@@ -21,5 +22,10 @@ namespace FPS_Game.Data
         public static implicit operator Vector3(Vector3Data vectorValue) => new Vector3(vectorValue.X, vectorValue.Y, vectorValue.Z);
 
         public static implicit operator Vector3Data(Vector3 vectorValue) => new Vector3Data(vectorValue.x, vectorValue.y, vectorValue.z);
+        
+        public override string ToString()
+        {
+            return $"[{X},{Y},{Z}]";
+        }
     }
 }
