@@ -6,7 +6,10 @@ namespace FPS_Game.Data
     [System.Serializable]
     public class GameData
     {
-        public SaveObjectData playerData;
+        public float gameScore;
+
+        public SaveObjectData playerTransformData;
+        public PlayerData playerData;
 
         public List<SaveObjectData> pickUpitems;
     }

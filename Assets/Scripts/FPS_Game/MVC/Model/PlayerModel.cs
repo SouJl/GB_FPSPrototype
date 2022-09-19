@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FPS_Game.Data;
+using System;
 using UnityEngine;
 
 namespace FPS_Game.MVC
@@ -18,6 +19,7 @@ namespace FPS_Game.MVC
         public float JumpHeight { get => _jumpHeight; private set => _jumpHeight = value; }
 
         public event Action<bool> GameOver = delegate (bool state) { };
+
 
         public PlayerModel(PlayerView view) 
         {
@@ -99,6 +101,12 @@ namespace FPS_Game.MVC
                 }
                 _activeBonus = null;
             }
+        }
+
+        public void LoadData(PlayerData data)
+        {
+            CurrentHealth = data.CurrentHealth;
+            CurrentSpeed = data.CurrentSpeed;
         }
 
     }

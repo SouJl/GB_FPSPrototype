@@ -7,6 +7,7 @@ using FPS_Game.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using TMPro;
 
 namespace FPS_Game
 {
@@ -17,6 +18,7 @@ namespace FPS_Game
         [SerializeField] private InteractView[] itemViews;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Image _healthBar;
+        [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private WeaponView _weaponView;
 
         private PlayerModel _playerModel;
@@ -34,7 +36,7 @@ namespace FPS_Game
         private WeaponController _weaponController;
 
         private SaveGameController _saveGameController;
-        private Action<Vector3, Quaternion, bool> pickUpLoad;
+
         /*UI components*/
         private BonusBarManager _bonusBarManager;
         private HealthBarManager _healthBarManager;
@@ -127,7 +129,6 @@ namespace FPS_Game
                         
                         bonusModel.AddBonus += _playerModel.AddBonus;
                         bonusModel.AddBonus += _bonusBarManager.AddBonus;
-                        pickUpLoad += bonusModel.LoadData;
                         interact = bonusModel;
                         break;
                     }
@@ -135,8 +136,6 @@ namespace FPS_Game
                     {
                         var gamePointModel = new GamePointModel(gamePoint);
                         gamePointModel.AddPoint += AddPoints;
-                        gamePointModel.AddPoint += _scoreManager.AddPoints;
-                        pickUpLoad += gamePointModel.LoadData;
 
                         interact = gamePointModel;
                         break;
@@ -145,7 +144,6 @@ namespace FPS_Game
                     {
                         var aidKitModel = new AidKitModel(aidKit);
                         aidKitModel.Heal += _playerModel.Heal;
-                        pickUpLoad += aidKitModel.LoadData;
                         interact = aidKitModel;
                         break;
                     }
@@ -165,23 +163,32 @@ namespace FPS_Game
         private void AddPoints(float value)
         {
             _gameScore += value;
-            if(_gameScore >= _gameGoal) 
+            _scoreManager.AddPoints(_gameScore);
+            /*if(_gameScore >= _gameGoal) 
             {
                 _gameOverManager.GameOver(true);
                 GameOver(true);
-            } 
+            } */
         }
 
         private GameData SaveGameData()
         {
             var gameData = new GameData();
 
-            gameData.playerData = new SaveObjectData
+            gameData.gameScore = _gameScore;
+
+            gameData.playerTransformData = new SaveObjectData
             {
                 Name = _playerView.name,
                 position = _playerView.transform.position,
                 rotation = _playerView.transform.rotation,
                 IsEnable = true
+            };
+
+            gameData.playerData = new PlayerData
+            {
+                CurrentHealth = _playerModel.CurrentHealth,
+                CurrentSpeed = _playerModel.CurrentSpeed
             };
 
             gameData.pickUpitems = new List<SaveObjectData>();
@@ -201,10 +208,13 @@ namespace FPS_Game
             return gameData;
         }
 
-        private void LoadGame(GameData data)
+        private void LoadGameData(GameData data)
         {
-            _playerView.newPos = data.playerData.position;
-            _playerView.transform.rotation = data.playerData.rotation;
+            _gameScore = data.gameScore;
+            _scoreManager.AddPoints(_gameScore);
+
+            _playerView.LoadData(data.playerTransformData.position, data.playerTransformData.rotation);
+            _playerModel.LoadData(data.playerData);
 
             foreach (var pickUpData in data.pickUpitems)
             {
@@ -252,7 +262,7 @@ namespace FPS_Game
             _weaponController = new WeaponController(CurrentWeapon, inputSystem);
             _executeUpdate.AddExecuteObject(_weaponController);
 
-            _saveGameController = new SaveGameController(inputSystem, SaveGameData, LoadGame);
+            _saveGameController = new SaveGameController(inputSystem, SaveGameData, LoadGameData);
 
         }
 
@@ -263,7 +273,8 @@ namespace FPS_Game
             _healthBarManager = new HealthBarManager(_playerModel, _healthBar);
             _executeUpdate.AddExecuteObject(_healthBarManager);
 
-             _scoreManager = GetComponentInChildren<ScoreManager>();
+            _scoreManager = new ScoreManager(_scoreText);
+
             _gameOverManager = GetComponentInChildren<GameOverManager>();
 
             _restartButton.onClick.AddListener(RestartGame);

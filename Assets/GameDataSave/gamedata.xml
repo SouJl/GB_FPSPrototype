@@ -1,33 +1,38 @@
 <?xml version="1.0"?>
 <GameData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <playerData>
+  <gameScore>100</gameScore>
+  <playerTransformData>
     <Name>Player</Name>
     <position>
-      <X>3.068128</X>
+      <X>14.3281746</X>
       <Y>1.20499992</Y>
-      <Z>2.57338071</Z>
+      <Z>11.7146826</Z>
     </position>
     <rotation>
       <X>0</X>
-      <Y>-0.378897935</Y>
+      <Y>-0.3827187</Y>
       <Z>0</Z>
-      <W>-0.9254385</W>
+      <W>-0.923864961</W>
     </rotation>
     <IsEnable>true</IsEnable>
+  </playerTransformData>
+  <playerData>
+    <CurrentHealth>80</CurrentHealth>
+    <CurrentSpeed>4</CurrentSpeed>
   </playerData>
   <pickUpitems>
     <SaveObjectData>
       <Name>Slow</Name>
       <position>
         <X>27.75</X>
-        <Y>1.6543901</Y>
+        <Y>1.23032379</Y>
         <Z>26.5</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.450003922</Y>
+        <Y>0.9395342</Y>
         <Z>-0</Z>
-        <W>0.89302665</W>
+        <W>-0.342455178</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -35,14 +40,14 @@
       <Name>Haste</Name>
       <position>
         <X>28.6365452</X>
-        <Y>1.6543901</Y>
+        <Y>1.23032379</Y>
         <Z>11.1795349</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.450003922</Y>
+        <Y>0.9395342</Y>
         <Z>-0</Z>
-        <W>0.89302665</W>
+        <W>-0.342455178</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -50,14 +55,14 @@
       <Name>Health</Name>
       <position>
         <X>22.6745739</X>
-        <Y>1.6543901</Y>
+        <Y>1.23032379</Y>
         <Z>17.8662643</Z>
       </position>
       <rotation>
         <X>-0</X>
-        <Y>0.949665964</Y>
+        <Y>0.422198147</Y>
         <Z>-0</Z>
-        <W>0.313264281</W>
+        <W>-0.9065036</W>
       </rotation>
       <IsEnable>true</IsEnable>
     </SaveObjectData>
@@ -74,7 +79,7 @@
         <Z>-0</Z>
         <W>1</W>
       </rotation>
-      <IsEnable>true</IsEnable>
+      <IsEnable>false</IsEnable>
     </SaveObjectData>
     <SaveObjectData>
       <Name>GamePoint (1)</Name>

@@ -29,8 +29,8 @@ namespace FPS_Game.MVC
         public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         public CharacterController Controller { get => _controller; set => _controller = value; }
 
-        [System.NonSerialized] public Vector3 newPos = Vector3.zero;
-
+        private Vector3 _loadPos = Vector3.zero;
+        private Quaternion _loadRot = Quaternion.identity;
 
 
         protected override void Awake()
@@ -38,12 +38,23 @@ namespace FPS_Game.MVC
             base.Awake();
         }
 
+        public void LoadData(Vector3 position, Quaternion rotation)
+        {
+            _loadPos = position;
+            _loadRot = rotation;
+        }
+
         private void LateUpdate()
         {
-            if (newPos != Vector3.zero)
+            if (_loadPos != Vector3.zero)
             {
-                transform.position = newPos;
-                newPos = Vector3.zero;
+                transform.position = _loadPos;
+                _loadPos = Vector3.zero;
+            }
+            if(_loadRot != Quaternion.identity)
+            {
+                transform.rotation = _loadRot;
+                _loadRot = Quaternion.identity;
             }
         }
     }
