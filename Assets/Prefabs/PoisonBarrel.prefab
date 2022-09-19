@@ -4971,7 +4971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 640536988911950269}
   - component: {fileID: 6132631320223703588}
-  - component: {fileID: 3595617997848015551}
+  - component: {fileID: 963959802968124473}
   m_Layer: 0
   m_Name: Poison
   m_TagString: Untagged
@@ -5008,7 +5008,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8, y: 0.5, z: 8}
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &3595617997848015551
+--- !u!114 &963959802968124473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5017,8 +5017,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8674282003806071674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218f7c9368b0b5746b2674a0c980d990, type: 3}
+  m_Script: {fileID: 11500000, guid: f4aee8d410a40164eb5fd2d48a1877bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 0
+  _transform: {fileID: 0}
+  _collider: {fileID: 0}
+  _damage: 0
   _tickTime: 1
