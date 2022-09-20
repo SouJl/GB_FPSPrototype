@@ -4,16 +4,36 @@ using UnityEngine;
 
 namespace FPS_Game
 {
+    public class ReadOnlyAttribute : PropertyAttribute { }
+
+    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+    public class ReadOnlyDrawer : PropertyDrawer
+    {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property, label, true);
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            GUI.enabled = false;
+            EditorGUI.PropertyField(position, property, label, true);
+            GUI.enabled = true;
+        }
+    }
+
     public class FPS_GameWindow : EditorWindow
     {
-        public List<GameObject> AvailablePrefabs;
-        public static GameObject ObjectInstantiate;
 
-        public string _nameObject = "Hello World";
-        public bool _groupEnabled;
-        public bool _randomColor = true;
-        public int _countObject = 1;
-        public float _radius = 10;
+        [ReadOnly] public List<GameObject> AvailablePrefabs;      
+        [ReadOnly] public static GameObject SelectedObjectToInst;
+        
+        public Vector3 SpawnPosition = Vector3.zero;
+
+        public string NameObject = "";
+        public bool IsGroupEnabled;
+        public int CountObject = 1;
+        public float SpawnRadius = 5;
 
         private SerializedObject so;
         private SerializedProperty gameObjectProp;
@@ -25,6 +45,7 @@ namespace FPS_Game
 
             so = new SerializedObject(this);
             gameObjectProp = so.FindProperty("AvailablePrefabs");
+
         }
 
         public static List<T> GetAssets<T>(string[] _foldersToSearch, string _filter) where T : UnityEngine.Object
@@ -42,42 +63,51 @@ namespace FPS_Game
 
         private void OnGUI()
         {
-            GUILayout.Label("Базовые настройки", EditorStyles.boldLabel);
-            
-            EditorGUILayout.PropertyField(gameObjectProp, true);
+            EditorGUILayout.Space(20);
 
-            ObjectInstantiate = EditorGUILayout.ObjectField("Объект который хотим вставить", ObjectInstantiate, typeof(GameObject), true) as GameObject;
-            _nameObject = EditorGUILayout.TextField("Имя объекта", _nameObject);
-            _groupEnabled = EditorGUILayout.BeginToggleGroup("Дополнительные настройки", _groupEnabled);
-            _randomColor = EditorGUILayout.Toggle("Случайный цвет", _randomColor);
-            _countObject = EditorGUILayout.IntSlider("Количество объектов", _countObject, 1, 100);
-            _radius = EditorGUILayout.Slider("Радиус окружности", _radius, 10, 50);
-            
+            EditorGUILayout.PropertyField(gameObjectProp, new GUIContent("Available Prefabs in Project"), true);
+
+            SelectedObjectToInst = EditorGUILayout.ObjectField("What Instantiate", SelectedObjectToInst, typeof(GameObject), true) as GameObject;
+            NameObject = EditorGUILayout.TextField("Name", NameObject);
+
+            EditorGUILayout.Space(5);
+            SpawnPosition = EditorGUILayout.Vector3Field("Spawn Posotion", SpawnPosition);
+            EditorGUILayout.Space(5);
+
+            IsGroupEnabled = EditorGUILayout.BeginToggleGroup("Additional Settings", IsGroupEnabled);       
+            CountObject = EditorGUILayout.IntSlider("Objects Count", CountObject, 1, 20); 
+            SpawnRadius = EditorGUILayout.Slider("Spawn Radius", SpawnRadius, 5, 20);                  
             EditorGUILayout.EndToggleGroup();
-            
-            var button = GUILayout.Button("Создать объекты");
+
+            EditorGUILayout.Space(20);
+
+            var button = GUILayout.Button("Create Object");
             if (button)
             {
-                if (ObjectInstantiate)
+                if (SelectedObjectToInst)
                 {
                     GameObject root = new GameObject("Root");
-                    for (int i = 0; i < _countObject; i++)
+                    for (int i = 0; i < CountObject; i++)
                     {
-                        float angle = i * Mathf.PI * 2 / _countObject;
-                        Vector3 pos = new Vector3(Mathf.Cos(angle), 0,
-                        Mathf.Sin(angle)) * _radius;
-                        GameObject temp = Instantiate(ObjectInstantiate, pos,
-                        Quaternion.identity);
-                        temp.name = _nameObject + "(" + i + ")";
+                        Vector3 pos = SpawnPosition + Random.insideUnitSphere * SpawnRadius * (IsGroupEnabled ? 1 : 0);
+                        GameObject temp = Instantiate(SelectedObjectToInst, pos, Quaternion.identity);
+                        temp.name = NameObject + "(" + i + ")";
                         temp.transform.parent = root.transform;
-                        var tempRenderer = temp.GetComponent<Renderer>();
-                        if (tempRenderer && _randomColor)
-                        {
-                            tempRenderer.material.color = Random.ColorHSV();
-                        }
                     }
                 }             
             }
+        }
+
+        private void OnSelectionChange()
+        {
+            var newSelected = Selection.activeGameObject;
+            if (newSelected && AvailablePrefabs.Contains(newSelected))
+            {
+                SelectedObjectToInst = newSelected;
+                NameObject = newSelected.name;
+                Debug.Log(SelectedObjectToInst.name);
+                Repaint();
+            }               
         }
 
     }
