@@ -21,6 +21,10 @@ namespace FPS_Game
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private WeaponView _weaponView;
 
+        [Header("In Test")]
+        [SerializeField] private EnemyView _enemyView;
+        private EnemyModel _enemyModel;
+
         private PlayerModel _playerModel;
         private Camera _camera;
         private PlayerInput inputSystem;
@@ -65,6 +69,8 @@ namespace FPS_Game
                 _playerModel.GameOver += _gameOverManager.GameOver;
 
                 SpawnBonus();
+
+                _enemyModel = new EnemyModel(_enemyView);
 
                 Cursor.lockState = CursorLockMode.Locked;
             }

@@ -19,7 +19,13 @@ namespace FPS_Game.MVC
             {
                 if(Physics.Raycast(Muzzle.position, Muzzle.forward, out RaycastHit hitinfo, Distance))
                 {
-                    Debug.Log(hitinfo.transform.name);
+                    Debug.Log(hitinfo.collider.tag);
+                    if (hitinfo.collider.tag == "Enemy")
+                    {
+                        IDamageable damageable = hitinfo.transform.GetComponent<IDamageable>();
+                        damageable?.Damage(Damage);
+                    }
+                    
                 }
 
                 CurrentAmmo--;
