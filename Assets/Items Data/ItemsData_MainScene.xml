@@ -45,4 +45,19 @@
     <Y>12</Y>
     <Z>13.7799988</Z>
   </Vector3Data>
+  <Vector3Data>
+    <X>19.9935474</X>
+    <Y>0.125</Y>
+    <Z>8.372041</Z>
+  </Vector3Data>
+  <Vector3Data>
+    <X>35.7435455</X>
+    <Y>0.125</Y>
+    <Z>19.12204</Z>
+  </Vector3Data>
+  <Vector3Data>
+    <X>8.243546</X>
+    <Y>0.125</Y>
+    <Z>38.87204</Z>
+  </Vector3Data>
 </ArrayOfVector3Data>
