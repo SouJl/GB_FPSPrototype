@@ -22,8 +22,7 @@ namespace FPS_Game
         [SerializeField] private WeaponView _weaponView;
 
         [Header("In Test")]
-        [SerializeField] private EnemyView _enemyView;
-        private EnemyModel _enemyModel;
+        [SerializeField] private EnemyView[] _enemyViews;
 
         private PlayerModel _playerModel;
         private Camera _camera;
@@ -32,6 +31,7 @@ namespace FPS_Game
         private PlayerController _playerController;
         private InteractableController _interactableController;
         private CameraController _cameraController;
+        private EnemyController _enemyController;
 
         private ListExecuteController _executeUpdate;
         private ListExecuteController _executeLateUpdate;
@@ -69,8 +69,6 @@ namespace FPS_Game
                 _playerModel.GameOver += _gameOverManager.GameOver;
 
                 SpawnBonus();
-
-                _enemyModel = new EnemyModel(_enemyView);
 
                 Cursor.lockState = CursorLockMode.Locked;
             }
@@ -267,6 +265,9 @@ namespace FPS_Game
             CurrentWeapon = new AssaltRifle(_weaponView);
             _weaponController = new WeaponController(CurrentWeapon, inputSystem);
             _executeUpdate.AddExecuteObject(_weaponController);
+
+            _enemyController = new EnemyController(_enemyViews.ToList(), _playerView.Transform);
+            _executeUpdate.AddExecuteObject(_enemyController);
 
             _saveGameController = new SaveGameController(inputSystem, SaveGameData, LoadGameData);
 

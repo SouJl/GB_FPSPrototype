@@ -21,6 +21,6 @@ namespace FPS_Game.MVC
             set => _currentHealth = Mathf.Clamp(value, 0f, MaxHealth);
         }
 
-        public abstract void Move(Vector2 input);
+        public abstract void Move(Vector3 input);
     }
 }

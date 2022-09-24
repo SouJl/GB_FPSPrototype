@@ -6,20 +6,26 @@ namespace FPS_Game.MVC
 {
     public class EnemyModel:AbstractUnitModel
     {
+        private string _name;
+        
+        public string Name { get => _name; set => _name = value; }
 
         public EnemyModel(EnemyView view)
         {
             Transform = view.Transform;
 
+            Name = view.name;
             MaxHealth = view.MaxHealth;
             CurrentHealth = MaxHealth;
             CurrentSpeed = view.Speed;
             view.TakeDamage += TakeDamage;
         }
 
-        public override void Move(Vector2 input)
+
+
+        public override void Move(Vector3 input)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void TakeDamage(float value)
@@ -27,7 +33,6 @@ namespace FPS_Game.MVC
             CurrentHealth -= value;
             if (CurrentHealth <= 0) Debug.Log("Enemy Dead");
         }
-
     }
 }
 

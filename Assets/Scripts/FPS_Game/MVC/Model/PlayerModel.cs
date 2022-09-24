@@ -35,7 +35,7 @@ namespace FPS_Game.MVC
             _controller = view.Controller;
         }
 
-        public override void Move(Vector2 input)
+        public override void Move(Vector3 input)
         {
             _isOnGround = _controller.isGrounded;
 
