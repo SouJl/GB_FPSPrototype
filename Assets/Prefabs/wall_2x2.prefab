@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2566303852557563289}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wall_2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,12 +180,20 @@ PrefabInstance:
       value: wall_tile
       objectReference: {fileID: 0}
     - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6096173444505616906, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -262,6 +270,10 @@ PrefabInstance:
       value: wall_tile (3)
       objectReference: {fileID: 0}
     - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -272,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 6096173444505616906, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_VersionIndex
       value: 4514
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -348,6 +364,10 @@ PrefabInstance:
       value: wall_tile (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -358,6 +378,10 @@ PrefabInstance:
     - target: {fileID: 6096173444505616906, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_VersionIndex
       value: 4508
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -434,6 +458,10 @@ PrefabInstance:
       value: wall_tile (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5645758806919363384, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -444,6 +472,10 @@ PrefabInstance:
     - target: {fileID: 6096173444505616906, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_VersionIndex
       value: 4511
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7247221296740734222, guid: 451d0838d933bfb4c8dd903d03b8e87b, type: 3}
       propertyPath: m_StaticEditorFlags

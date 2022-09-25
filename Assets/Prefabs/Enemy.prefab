@@ -2295,6 +2295,7 @@ GameObject:
   - component: {fileID: 3083398555051908238}
   - component: {fileID: 7998470638737522686}
   - component: {fileID: 120125951392486758}
+  - component: {fileID: 2472699283558177317}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -2351,9 +2352,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}
   _collider: {fileID: 0}
-  _pointofView: {fileID: 6959568443615635248}
-  _agent: {fileID: 0}
+  _fieldOfView: {fileID: 2472699283558177317}
   _speed: 0
+  _agent: {fileID: 0}
   _maxHealth: 100
 --- !u!195 &120125951392486758
 NavMeshAgent:
@@ -2377,6 +2378,27 @@ NavMeshAgent:
   m_BaseOffset: 1.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2472699283558177317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002950162029448339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b454015e3aed447bdaca2847f92f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pointofView: {fileID: 6959568443615635248}
+  _distance: 100
+  _angle: 0
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _obstructionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7002950162072602709
 GameObject:
   m_ObjectHideFlags: 0

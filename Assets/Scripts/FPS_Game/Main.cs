@@ -266,7 +266,7 @@ namespace FPS_Game
             _weaponController = new WeaponController(CurrentWeapon, inputSystem);
             _executeUpdate.AddExecuteObject(_weaponController);
 
-            _enemyController = new EnemyController(_enemyViews.ToList(), _playerView.Transform);
+            _enemyController = new EnemyController(_enemyViews.ToList());
             _executeUpdate.AddExecuteObject(_enemyController);
 
             _saveGameController = new SaveGameController(inputSystem, SaveGameData, LoadGameData);

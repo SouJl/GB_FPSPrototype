@@ -11,9 +11,7 @@ namespace FPS_Game.MVC
 
         private List<EnemyModel> _enemyModels;
 
-        private Transform _player;
-
-        public EnemyController(List<EnemyView> views, Transform player)
+        public EnemyController(List<EnemyView> views)
         {
             if(views != null)
             {
@@ -26,8 +24,6 @@ namespace FPS_Game.MVC
                     _enemyModels.Add(new EnemyModel(view));
                 }
             }
-
-            _player = player;
         }
 
         public void Execute()
@@ -43,7 +39,7 @@ namespace FPS_Game.MVC
                     view.gameObject.SetActive(false);
                 }
 
-                enemy.Move(_player.position);
+                enemy.Move(Vector3.zero);
             }
         }
     }
