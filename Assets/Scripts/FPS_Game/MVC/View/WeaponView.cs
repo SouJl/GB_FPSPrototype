@@ -21,9 +21,10 @@ namespace FPS_Game.MVC
         public float ReloadTime { get => _reloadTime; set => _reloadTime = value; }
         public Transform Muzzle { get => _muzzle; set => _muzzle = value; }
 
-        private void FixedUpdate()
+
+        private void OnDrawGizmos()
         {
-            Debug.DrawLine(Muzzle.position, Muzzle.position + Muzzle.forward * 180);
+            Debug.DrawLine(Muzzle.position, Muzzle.position + Muzzle.forward * Distance);
         }
 
     }
