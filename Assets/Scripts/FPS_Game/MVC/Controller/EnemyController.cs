@@ -39,6 +39,7 @@ namespace FPS_Game.MVC
                 if(enemy.CurrentHealth <= 0)
                 {
                     var view = _enemyViews.Find(e => e.name == enemy.Name);
+                    view.Agent.enabled = false;
                     view.gameObject.SetActive(false);
                 }
 
