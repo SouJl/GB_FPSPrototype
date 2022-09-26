@@ -26,6 +26,12 @@ namespace FPS_Game.MVC
             StartCoroutine(OnTriggerCoroutine(time, state, doneCallBack));
         }
 
+        public void WaitTrailDone(TrailRenderer trail, RaycastHit hit, ParticleSystem onHitSysem) 
+        {
+            if(trail && onHitSysem)
+                StartCoroutine(WaitTrailDoneCoroutine(trail, hit, onHitSysem));
+        }
+
         IEnumerator WaitDelayCoroutine(float time, Action<bool> doneCallBack)
         {
             yield return new WaitForSeconds(time);
@@ -43,6 +49,22 @@ namespace FPS_Game.MVC
             {
                 doneCallBack?.Invoke(false);
             }
+        }
+
+        IEnumerator WaitTrailDoneCoroutine(TrailRenderer trail, RaycastHit hit, ParticleSystem onHitSysem)
+        {
+            float time = 0;
+            var startPos = trail.transform.position;
+            while(time < 1)
+            {
+                trail.transform.position = Vector3.Lerp(startPos, hit.point, time);
+                time += Time.deltaTime/trail.time;
+                yield return null;
+            }
+            trail.transform.position = hit.point;
+            Instantiate(onHitSysem, hit.point, Quaternion.LookRotation(hit.normal));
+
+            Destroy(trail.gameObject, trail.time);
         }
     }
 }

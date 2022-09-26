@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FPS_Game.MVC
 {
@@ -12,26 +13,29 @@ namespace FPS_Game.MVC
         }
 
         private bool CanShoot() => !IsReloading && TimeBeforeShoot > 1f / (FireRate / 60f);
-        
+
         public override void Shoot()
         {
-            if(CurrentAmmo > 0 && CanShoot())
+            if (!(CurrentAmmo > 0 && CanShoot())) return;
+
+            if(ShootingSystem) ShootingSystem.Play();
+
+            if (Physics.Raycast(Muzzle.position, Muzzle.forward, out RaycastHit hitinfo, Distance))
             {
-                if(Physics.Raycast(Muzzle.position, Muzzle.forward, out RaycastHit hitinfo, Distance))
+                Debug.Log(hitinfo.collider.gameObject.tag);
+
+                CoroutineProcesses.Instance.WaitTrailDone(BulletTrail, hitinfo, ImpacBulletSystem);
+
+                if (hitinfo.collider.gameObject.tag == "Enemy")
                 {
-                    Debug.Log(hitinfo.collider.gameObject.tag);
-                    if (hitinfo.collider.gameObject.tag == "Enemy")
-                    {
-                        IDamageable damageable = hitinfo.transform.GetComponent<IDamageable>();
-                        damageable?.Damage(Damage);
-                    }
-                    
+                    IDamageable damageable = hitinfo.transform.GetComponent<IDamageable>();
+                    damageable?.Damage(Damage);
                 }
 
-                CurrentAmmo--;
-                TimeBeforeShoot = 0;
-
             }
+
+            CurrentAmmo--;
+            TimeBeforeShoot = 0;
         }
 
 
@@ -39,6 +43,7 @@ namespace FPS_Game.MVC
         {
             if (!IsReloading)
             {
+                Debug.Log("Reload");
                 ReloadStart();
             }
         }
@@ -53,6 +58,13 @@ namespace FPS_Game.MVC
         {
             CurrentAmmo = MagSize;
             IsReloading = false;
+        }
+
+        private Vector3 GetDirection()
+        {
+            Vector3 direction = Muzzle.forward;
+
+            return direction;
         }
     }
 }
