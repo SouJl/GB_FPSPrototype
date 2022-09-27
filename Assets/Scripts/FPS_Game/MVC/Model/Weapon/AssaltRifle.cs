@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace FPS_Game.MVC
 {
@@ -24,7 +23,9 @@ namespace FPS_Game.MVC
             {
                 Debug.Log(hitinfo.collider.gameObject.tag);
 
-                CoroutineProcesses.Instance.WaitTrailDone(BulletTrail, hitinfo, ImpacBulletSystem);
+                TrailRenderer trail = CoroutineProcesses.Instance.SpawnObject(BulletTrail, ShootingSystem.transform.position);
+
+                CoroutineProcesses.Instance.WaitTrailDone(trail, hitinfo, ImpacBulletSystem);
 
                 if (hitinfo.collider.gameObject.tag == "Enemy")
                 {

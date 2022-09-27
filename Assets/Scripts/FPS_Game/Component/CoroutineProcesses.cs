@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace FPS_Game.MVC
 {
@@ -14,6 +15,11 @@ namespace FPS_Game.MVC
             {
                 Instance = this;
             }
+        }
+
+        public T SpawnObject<T>(T obj, Vector3 pos) where T : Object
+        {
+            return Instantiate(obj, pos, Quaternion.identity);
         }
 
         public void WaitDelayCallBack(float time, Action<bool> doneCallBack)
@@ -62,7 +68,7 @@ namespace FPS_Game.MVC
                 yield return null;
             }
             trail.transform.position = hit.point;
-            Instantiate(onHitSysem, hit.point, Quaternion.LookRotation(hit.normal));
+            /*Instantiate(onHitSysem, hit.point, Quaternion.LookRotation(hit.normal));*/
 
             Destroy(trail.gameObject, trail.time);
         }
