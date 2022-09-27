@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace FPS_Game.MVC
@@ -13,7 +14,8 @@ namespace FPS_Game.MVC
         [SerializeField] private int _fireRate;
         [SerializeField] private float _reloadTime;
         [SerializeField] private Transform _muzzle;
-        
+        [SerializeField] private TextMeshProUGUI _ammoText;
+
         [Space(10)]
         [Header("Effect Settings")]
         [SerializeField] private ParticleSystem _shootingSystem;
@@ -30,7 +32,7 @@ namespace FPS_Game.MVC
         public ParticleSystem ShootingSystem { get => _shootingSystem; set => _shootingSystem = value; }
         public ParticleSystem ImpacBulletSystem { get => _impacBulletSystem; set => _impacBulletSystem = value; }
         public TrailRenderer BulletTrail { get => _bulletTrail; set => _bulletTrail = value; }
-      
+        public TextMeshProUGUI AmmoText { get => _ammoText; set => _ammoText = value; }
 
         private void OnDrawGizmos()
         {

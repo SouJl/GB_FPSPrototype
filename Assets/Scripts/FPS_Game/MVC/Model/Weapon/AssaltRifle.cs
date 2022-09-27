@@ -1,14 +1,19 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace FPS_Game.MVC
 {
     public class AssaltRifle : BaseWeapon
     {
+        private TextMeshProUGUI _ammoText;
+
+        public TextMeshProUGUI AmmoText { get => _ammoText; set => _ammoText = value; }
 
         public AssaltRifle(WeaponView view) : base(view)
         {
-
+            AmmoText = view.AmmoText;
+            UpdateUI();
         }
 
         private bool CanShoot() => !IsReloading && TimeBeforeShoot > 1f / (FireRate / 60f);
@@ -37,6 +42,7 @@ namespace FPS_Game.MVC
 
             CurrentAmmo--;
             TimeBeforeShoot = 0;
+            UpdateUI();
         }
 
 
@@ -59,6 +65,12 @@ namespace FPS_Game.MVC
         {
             CurrentAmmo = MagSize;
             IsReloading = false;
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            AmmoText.text = $"{CurrentAmmo}";
         }
 
         private Vector3 GetDirection()
