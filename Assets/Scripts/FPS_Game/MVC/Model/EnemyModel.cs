@@ -26,6 +26,7 @@ namespace FPS_Game.MVC
         public LayerMask ObstructionMask { get => _obstructionMask; set => _obstructionMask = value; }
 
         private bool _isActive;
+        private Animator _animator;
 
         public EnemyModel(EnemyView view)
         {
@@ -38,6 +39,7 @@ namespace FPS_Game.MVC
             ObstructionMask = view.FieldOfView.ObstructionMask;
 
             Agent = view.Agent;
+            _animator = view.Animator;
 
             Name = view.name;
             MaxHealth = view.MaxHealth;
@@ -56,14 +58,13 @@ namespace FPS_Game.MVC
             if(FieldOfViewCheck(out Vector3 target))
             {
                 Agent.SetDestination(target);
-
-                Vector3 targetDir = target - Transform.position;
-                Quaternion newDir = Quaternion.LookRotation(targetDir);
-                Transform.rotation = newDir;
+                Transform.LookAt(target);
+                _animator.SetBool("IsMove", true);
             }
             else 
             {
                 Agent.ResetPath();
+                _animator.SetBool("IsMove", false);
             }
         }
 

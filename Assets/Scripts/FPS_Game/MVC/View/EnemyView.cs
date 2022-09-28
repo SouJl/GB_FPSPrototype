@@ -12,6 +12,7 @@ namespace FPS_Game.MVC
         [Header("Movement settings")]
         [SerializeField] private float _speed;
         [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private Animator _animator;
 
         [Header("Health settings: Enemy")]
         [SerializeField] private float _maxHealth = 100f;
@@ -20,6 +21,7 @@ namespace FPS_Game.MVC
         public float Speed { get => _speed; set => _speed = value; }
         public NavMeshAgent Agent { get => _agent; set => _agent = value; }
         public FieldOfView FieldOfView { get => _fieldOfView; set => _fieldOfView = value; }
+        public Animator Animator { get => _animator; set => _animator = value; }
 
         public Action<float> TakeDamage;
 
