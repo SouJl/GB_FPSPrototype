@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,9 +25,12 @@ namespace FPS_Game.MVC
         public float Angle { get => _angle; set => _angle = value; }
         public LayerMask TargetMask { get => _targetMask; set => _targetMask = value; }
         public LayerMask ObstructionMask { get => _obstructionMask; set => _obstructionMask = value; }
+        
+        public Action<float> DealDamage;
 
         private bool _isActive;
         private Animator _animator;
+        private float _timeDelay;
 
         public EnemyModel(EnemyView view)
         {
@@ -49,8 +53,6 @@ namespace FPS_Game.MVC
             _isActive = true;
         }
 
-
-
         public override void Move(Vector3 input)
         {
             if (!_isActive) return;
@@ -60,6 +62,21 @@ namespace FPS_Game.MVC
                 Agent.SetDestination(target);
                 Transform.LookAt(target);
                 _animator.SetBool("IsMove", true);
+                
+                if (OnExplodeCheck()) 
+                {
+                    if(_timeDelay > 1) 
+                    {
+                        DealDamage?.Invoke(10);
+                        _timeDelay = 0;
+                    }
+
+                    _timeDelay += Time.deltaTime;
+                }
+                else
+                {
+                    _timeDelay = 0;
+                }
             }
             else 
             {
@@ -77,6 +94,20 @@ namespace FPS_Game.MVC
                 Debug.Log("Enemy Dead");
             }
         }
+
+        public bool OnExplodeCheck()
+        {
+            var colliders = Physics.OverlapSphere(Transform.position, Distance / 2);
+            foreach (var hit in colliders)
+            {
+                if (!hit.gameObject.CompareTag("Player")) continue;
+
+                return true;
+            }
+
+            return false;
+        }
+
 
         private bool FieldOfViewCheck(out Vector3 targetPos)
         {

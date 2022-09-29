@@ -11,7 +11,7 @@ namespace FPS_Game.MVC
 
         private List<EnemyModel> _enemyModels;
 
-        public EnemyController(List<EnemyView> views)
+        public EnemyController(List<EnemyView> views, PlayerModel player)
         {
             if(views != null)
             {
@@ -22,6 +22,7 @@ namespace FPS_Game.MVC
                 foreach (var view in views)
                 {
                     _enemyModels.Add(new EnemyModel(view));
+                    _enemyModels.Last().DealDamage += player.TakeDamage;
                 }
             }
         }
