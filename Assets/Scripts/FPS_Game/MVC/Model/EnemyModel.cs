@@ -13,15 +13,18 @@ namespace FPS_Game.MVC
 
     public class EnemyModel:AbstractUnitModel
     {
+        /*Base settings*/
         private string _name;
         private NavMeshAgent _agent;
-        
+        private float _explosionDealy;
+
         /*POV*/
         private Transform _pointofView;
         private float _distance;
         private float _angle;
         private LayerMask _targetMask;
         private LayerMask _obstructionMask;
+
 
         public string Name { get => _name; set => _name = value; }
         public Transform PointofView { get => _pointofView; set => _pointofView = value; }
@@ -30,11 +33,31 @@ namespace FPS_Game.MVC
         public float Angle { get => _angle; set => _angle = value; }
         public LayerMask TargetMask { get => _targetMask; set => _targetMask = value; }
         public LayerMask ObstructionMask { get => _obstructionMask; set => _obstructionMask = value; }
+        public float ExplosionDealy { get => _explosionDealy; set => _explosionDealy = value; }
         
-        public Action<float> DealDamage;
-
         private bool _isActive;
-        private Animator _animator;
+        
+        public bool IsActive
+        {
+            get => _isActive;
+            private set
+            {
+                if(_isActive != value)
+                {
+                    _isActive = value;
+                    if (!_isActive)
+                    {
+                        CurrentHealth = 0;
+                        _bodyAnimator.ResetTrigger("ExpTrigger");
+                        _legsAnimator.ResetTrigger("IsMove");
+                    }
+                }
+            }
+        }
+
+        public Action<float> DealDamage;
+        private Animator _bodyAnimator;
+        private Animator _legsAnimator;
         private float _timeDelay;
         
         private Vector3 _startPosition;
@@ -51,74 +74,98 @@ namespace FPS_Game.MVC
             ObstructionMask = view.FieldOfView.ObstructionMask;
 
             Agent = view.Agent;
-            _animator = view.Animator;
+            _bodyAnimator = view.BodyAnimator;
+            _legsAnimator = view.LegsAnimator;
 
             Name = view.name;
             MaxHealth = view.MaxHealth;
             CurrentHealth = MaxHealth;
             CurrentSpeed = view.Speed;
             view.TakeDamage += TakeDamage;
-            _isActive = true;
+            IsActive = true;
 
             _startPosition = Transform.position;
             _startTotation = Transform.rotation;
+
+            ExplosionDealy = view.ExplosionDelay;
         }
 
         public override void Move(Vector3 input)
         {
-            if (!_isActive) return;
+            if (!IsActive) return;
 
+            HowToMove(input);
+            HowToAttack();
+        }
+
+
+        private void HowToMove(Vector3 input) 
+        {
             switch (CurrentState(input))
             {
                 case MoveState.None:
                     {
                         Agent.ResetPath();
-                        
-                        if(Quaternion.Angle(Transform.rotation, _startTotation) > 0)
+
+                        if (Quaternion.Angle(Transform.rotation, _startTotation) > 0)
                             Transform.rotation = Quaternion.RotateTowards(Transform.rotation, _startTotation, 2f);
                         else
-                            _animator.SetBool("IsMove", false);
-                        
+                            _legsAnimator.SetBool("IsMove", false);
                         break;
                     }
                 case MoveState.ToTarget:
                     {
                         Agent.SetDestination(input);
                         Transform.LookAt(input);
-                        _animator.SetBool("IsMove", true);
 
-                        if (OnExplodeCheck())
-                        {
-                            if (_timeDelay > 1)
-                            {
-                                DealDamage?.Invoke(10);
-                                _timeDelay = 0;
-                            }
-
-                            _timeDelay += Time.deltaTime;
-                        }
-                        else
-                        {
-                            _timeDelay = 0;
-                        }
+                        _legsAnimator.SetBool("IsMove", true);
 
                         break;
                     }
                 case MoveState.ToStart:
                     {
                         Agent.SetDestination(_startPosition);
-                        _animator.SetBool("IsMove", true);
+                        _legsAnimator.SetBool("IsMove", true);
                         break;
                     }
             }
+
         }
+
+        private void HowToAttack()
+        {
+            if (OnExplodeCheck())
+            {
+                if (_timeDelay > ExplosionDealy)
+                {
+                    _bodyAnimator.SetBool("ExpTrigger", false);
+                    DealDamage?.Invoke(50);
+                    _timeDelay = 0;
+
+                    IsActive = false;
+                }
+                else
+                {
+                    if(!_bodyAnimator.GetAnimatorTransitionInfo(0).IsName("ExpTrigger"))
+                        _bodyAnimator.SetBool("ExpTrigger", true);
+
+                    _timeDelay += Time.deltaTime;
+                }          
+            }
+            else
+            {
+                _bodyAnimator.SetBool("ExpTrigger", false);
+                _timeDelay = 0;
+            }
+        }
+
 
         public void TakeDamage(float value)
         {
             CurrentHealth -= value;
             if (CurrentHealth <= 0)
             {
-                _isActive = false;
+                IsActive = false;
                 Debug.Log("Enemy Dead");
             }
         }
