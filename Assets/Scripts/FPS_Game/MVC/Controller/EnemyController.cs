@@ -11,6 +11,8 @@ namespace FPS_Game.MVC
 
         private List<EnemyModel> _enemyModels;
 
+        private Transform _playerTrans;
+
         public EnemyController(List<EnemyView> views, PlayerModel player)
         {
             if(views != null)
@@ -24,6 +26,8 @@ namespace FPS_Game.MVC
                     _enemyModels.Add(new EnemyModel(view));
                     _enemyModels.Last().DealDamage += player.TakeDamage;
                 }
+
+                _playerTrans = player.Transform;
             }
         }
 
@@ -40,7 +44,7 @@ namespace FPS_Game.MVC
                     view.gameObject.SetActive(false);
                 }
 
-                enemy.Move(Vector3.zero);
+                enemy.Move(_playerTrans.position);
             }
         }
     }

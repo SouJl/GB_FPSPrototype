@@ -1,11 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace FPS_Game.MVC
 {
+    enum MoveState
+    {
+        None,
+        ToTarget,
+        ToStart,
+    }
+
     public class EnemyModel:AbstractUnitModel
     {
         private string _name;
@@ -31,6 +36,9 @@ namespace FPS_Game.MVC
         private bool _isActive;
         private Animator _animator;
         private float _timeDelay;
+        
+        private Vector3 _startPosition;
+        private Quaternion _startTotation;
 
         public EnemyModel(EnemyView view)
         {
@@ -51,37 +59,57 @@ namespace FPS_Game.MVC
             CurrentSpeed = view.Speed;
             view.TakeDamage += TakeDamage;
             _isActive = true;
+
+            _startPosition = Transform.position;
+            _startTotation = Transform.rotation;
         }
 
         public override void Move(Vector3 input)
         {
             if (!_isActive) return;
 
-            if(FieldOfViewCheck(out Vector3 target))
+            switch (CurrentState(input))
             {
-                Agent.SetDestination(target);
-                Transform.LookAt(target);
-                _animator.SetBool("IsMove", true);
-                
-                if (OnExplodeCheck()) 
-                {
-                    if(_timeDelay > 1) 
+                case MoveState.None:
                     {
-                        DealDamage?.Invoke(10);
-                        _timeDelay = 0;
+                        Agent.ResetPath();
+                        
+                        if(Quaternion.Angle(Transform.rotation, _startTotation) > 0)
+                            Transform.rotation = Quaternion.RotateTowards(Transform.rotation, _startTotation, 2f);
+                        else
+                            _animator.SetBool("IsMove", false);
+                        
+                        break;
                     }
+                case MoveState.ToTarget:
+                    {
+                        Agent.SetDestination(input);
+                        Transform.LookAt(input);
+                        _animator.SetBool("IsMove", true);
 
-                    _timeDelay += Time.deltaTime;
-                }
-                else
-                {
-                    _timeDelay = 0;
-                }
-            }
-            else 
-            {
-                Agent.ResetPath();
-                _animator.SetBool("IsMove", false);
+                        if (OnExplodeCheck())
+                        {
+                            if (_timeDelay > 1)
+                            {
+                                DealDamage?.Invoke(10);
+                                _timeDelay = 0;
+                            }
+
+                            _timeDelay += Time.deltaTime;
+                        }
+                        else
+                        {
+                            _timeDelay = 0;
+                        }
+
+                        break;
+                    }
+                case MoveState.ToStart:
+                    {
+                        Agent.SetDestination(_startPosition);
+                        _animator.SetBool("IsMove", true);
+                        break;
+                    }
             }
         }
 
@@ -109,15 +137,10 @@ namespace FPS_Game.MVC
         }
 
 
-        private bool FieldOfViewCheck(out Vector3 targetPos)
+        private bool FieldOfViewCheck(Vector3 targetPos)
         {
-            targetPos = Vector3.zero;
-
-            Collider[] rangeChecks = Physics.OverlapSphere(PointofView.position, Distance, TargetMask);
-
-            if (rangeChecks.Length == 0) return false;
-
-            targetPos = rangeChecks[0].transform.position;
+            if (Vector3.Distance(Transform.position, targetPos) > Distance) return false;
+            
             Vector3 directionToTarget = (targetPos - PointofView.position).normalized;
 
             if (Vector3.Angle(PointofView.forward, directionToTarget) < Angle / 2)
@@ -131,6 +154,15 @@ namespace FPS_Game.MVC
             }
             else
                 return false;
+        }
+
+        private MoveState CurrentState(Vector3 target)
+        {
+            if (FieldOfViewCheck(target)) return MoveState.ToTarget;
+            
+            if ((Transform.position -  _startPosition).sqrMagnitude > 0.1f) return MoveState.ToStart;
+            
+            return MoveState.None;
         }
     }
 }
