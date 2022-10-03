@@ -8,7 +8,7 @@ namespace FPS_Game.MVC
         private float _maxHealth;
         private float _currentSpeed;
         private float _currentHealth;
-
+        
         public Transform Transform { get => _transform; set => _transform = value; }
 
         public float CurrentSpeed { get => _currentSpeed; set => _currentSpeed = value; }
@@ -20,7 +20,7 @@ namespace FPS_Game.MVC
             get => _currentHealth; 
             set => _currentHealth = Mathf.Clamp(value, 0f, MaxHealth);
         }
-
+        
         public abstract void Move(Vector3 input);
     }
 }

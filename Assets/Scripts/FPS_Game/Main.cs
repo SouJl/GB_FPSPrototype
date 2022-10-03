@@ -22,7 +22,7 @@ namespace FPS_Game
         [SerializeField] private WeaponView _weaponView;
 
         [Header("In Test")]
-        [SerializeField] private EnemyView[] _enemyViews;
+        [SerializeField] private BaseEnemyView[] _enemyViews;
 
         private PlayerModel _playerModel;
         private Camera _camera;

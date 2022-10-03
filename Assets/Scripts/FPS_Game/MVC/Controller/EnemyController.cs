@@ -7,26 +7,33 @@ namespace FPS_Game.MVC
     public class EnemyController: IExecute
     {
 
-        private List<EnemyView> _enemyViews;
+        private List<BaseEnemyView> _enemyViews;
 
-        private List<EnemyModel> _enemyModels;
+        private List<AbstractEnemyModel> _enemyModels;
 
         private Transform _playerTrans;
 
-        public EnemyController(List<EnemyView> views, PlayerModel player)
+        public EnemyController(List<BaseEnemyView> views, PlayerModel player)
         {
             if(views != null)
             {
                 _enemyViews = views;
 
-                _enemyModels = new List<EnemyModel>();
+                _enemyModels = new List<AbstractEnemyModel>();
 
                 foreach (var view in views)
                 {
-                    _enemyModels.Add(new EnemyModel(view));
-                    _enemyModels.Last().DealDamage += player.TakeDamage;
-                }
+                    AbstractEnemyModel enemy = null;
 
+                    if(view is BomberEnemyView bomberView)
+                    {
+                        enemy = new BomberEnemyModel(bomberView);
+                        enemy.DealDamage += player.TakeDamage;
+                    } 
+
+                    if(enemy != null)
+                        _enemyModels.Add(enemy);
+                }
                 _playerTrans = player.Transform;
             }
         }
