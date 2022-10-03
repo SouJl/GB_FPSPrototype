@@ -50,6 +50,7 @@ namespace FPS_Game.MVC
                         CurrentHealth = 0;
                         _bodyAnimator.ResetTrigger("ExpTrigger");
                         _legsAnimator.ResetTrigger("IsMove");
+                        CoroutineProcesses.Instance.SpawnObject(_explosionSystem, Transform.position);
                     }
                 }
             }
@@ -59,7 +60,8 @@ namespace FPS_Game.MVC
         private Animator _bodyAnimator;
         private Animator _legsAnimator;
         private float _timeDelay;
-        
+        private GameObject _explosionSystem;
+
         private Vector3 _startPosition;
         private Quaternion _startTotation;
 
@@ -88,6 +90,7 @@ namespace FPS_Game.MVC
             _startTotation = Transform.rotation;
 
             ExplosionDealy = view.ExplosionDelay;
+            _explosionSystem = view.ExposionSystem;
         }
 
         public override void Move(Vector3 input)

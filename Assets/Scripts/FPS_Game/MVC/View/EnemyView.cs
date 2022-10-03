@@ -12,7 +12,10 @@ namespace FPS_Game.MVC
         [Header("Base settings")]
         [SerializeField] private float _speed;
         [SerializeField] private NavMeshAgent _agent;
+
+        [Header("Explosion settings")]
         [SerializeField] private float _explosionDelay = 3f;
+        [SerializeField] private GameObject _exposionSystem;
 
         [Header("Animation Settings")]
         [SerializeField] private Animator _bodyAnimator;
@@ -28,6 +31,7 @@ namespace FPS_Game.MVC
         public Animator LegsAnimator { get => _legsAnimator; set => _legsAnimator = value; }
         public Animator BodyAnimator { get => _bodyAnimator; set => _bodyAnimator = value; }
         public float ExplosionDelay { get => _explosionDelay; set => _explosionDelay = value; }
+        public GameObject ExposionSystem { get => _exposionSystem; set => _exposionSystem = value; }
 
         public Action<float> TakeDamage;
 

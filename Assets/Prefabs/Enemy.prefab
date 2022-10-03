@@ -2407,6 +2407,8 @@ MonoBehaviour:
   _fieldOfView: {fileID: 2472699283558177317}
   _speed: 0
   _agent: {fileID: 0}
+  _explosionDelay: 3
+  _exposionSystem: {fileID: 1827007939316994616, guid: dd4e4622b4722fc4e81a5fe583bc06dd, type: 3}
   _bodyAnimator: {fileID: 8927079398541377669}
   _legsAnimator: {fileID: 1808796059367995782}
   _maxHealth: 100
