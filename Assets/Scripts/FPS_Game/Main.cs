@@ -22,6 +22,9 @@ namespace FPS_Game
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private WeaponView _weaponView;
 
+        [Space(20)]
+        [SerializeField] private OutOfLine _outOfLine;
+
         private PlayerModel _playerModel;
         private Camera _camera;
         private PlayerInput inputSystem;
@@ -70,6 +73,8 @@ namespace FPS_Game
 
                 SpawnBonus();
 
+                _outOfLine.CallRestart += RestartGame;
+                
                 Cursor.lockState = CursorLockMode.Locked;
             }
             catch (PlayerNotFoundExeption ex) 
