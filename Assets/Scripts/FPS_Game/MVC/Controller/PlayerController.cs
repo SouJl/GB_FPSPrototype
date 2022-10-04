@@ -1,31 +1,34 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace FPS_Game.MVC
 {
     public class PlayerController : IExecute
     {
-        private PlayerModel playerModel;
+        private PlayerModel _playerModel;
         private PlayerInput _iputSystem;
 
         private InputAction _move;
         private InputAction _jump;
 
-        public PlayerController(PlayerModel model, PlayerInput inputSys)
+        public PlayerController(PlayerModel model, PlayerInput inputSys, Action<float> scoreHandler)
         {
-            playerModel = model;
+            _playerModel = model;
             _iputSystem = inputSys;
 
             _move = _iputSystem.Player.Movement;
             _jump = _iputSystem.Player.Jump;
-            _jump.performed += jmp => playerModel.Jump();
+            _jump.performed += jmp => _playerModel.Jump();
+
+            _playerModel.ChangeScore += scoreHandler;
 
             OnEnable();
         }
 
         public void Execute()
         {
-            playerModel.Move(_move.ReadValue<Vector2>());
+            _playerModel.Move(_move.ReadValue<Vector2>());
         }
 
         private void OnEnable()

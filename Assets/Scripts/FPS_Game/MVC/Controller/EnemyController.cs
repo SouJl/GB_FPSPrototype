@@ -29,7 +29,9 @@ namespace FPS_Game.MVC
                     {
                         enemy = new BomberEnemyModel(bomberView);
                         enemy.DealDamage += player.TakeDamage;
-                    } 
+                    }
+
+                    enemy.AddPoints += player.GetPoints;
 
                     if(enemy != null)
                         _enemyModels.Add(enemy);
@@ -47,7 +49,6 @@ namespace FPS_Game.MVC
                 if(enemy.CurrentHealth <= 0)
                 {
                     var view = _enemyViews.Find(e => e.name == enemy.Name);
-                    view.Agent.enabled = false;
                     view.gameObject.SetActive(false);
                 }
 

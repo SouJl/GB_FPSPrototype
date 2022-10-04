@@ -8,6 +8,7 @@ namespace FPS_Game.MVC
     {
         private float _gravity;
         private float _jumpHeight;
+        private float _currentPoints;
 
         private CharacterController _controller;
         private Vector3 velocity;
@@ -17,7 +18,18 @@ namespace FPS_Game.MVC
         public float Gravity { get => _gravity; private set => _gravity = value; }
         public float JumpHeight { get => _jumpHeight; private set => _jumpHeight = value; }
 
-        public event Action<bool> GameOver = delegate (bool state) { };
+        public Action<bool> GameOver = delegate (bool state) { };
+        public Action<float> ChangeScore;
+
+        public float CurrentPoints
+        {
+            get => _currentPoints;
+            set 
+            {
+                _currentPoints = value;
+                ChangeScore?.Invoke(CurrentPoints);
+            }
+        }
 
         public PlayerModel(PlayerView view) 
         {
@@ -66,6 +78,8 @@ namespace FPS_Game.MVC
             CurrentHealth -= value;
             if (CurrentHealth <= 0) GameOver?.Invoke(false);
         }
+
+        public void GetPoints(float value) => CurrentPoints += value;
 
         private BonusModel _activeBonus;
 

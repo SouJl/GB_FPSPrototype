@@ -55,13 +55,15 @@ namespace FPS_Game
             {
                 if (!_playerView) throw new PlayerNotFoundExeption("Объект Player не задан");
 
-                inputSystem = new PlayerInput();
+                _executeUpdate = new ListExecuteController();
+                _executeLateUpdate = new ListExecuteController();
 
+                inputSystem = new PlayerInput();
                 _camera = _playerView.Camera;
                 _playerModel = new PlayerModel(_playerView);
 
-                InitExecuteObjects();
                 InitUIComponents();
+                InitExecuteObjects();
 
                 _playerModel.GameOver += GameOver;
                 _playerModel.GameOver += _gameOverManager.GameOver;
@@ -137,7 +139,7 @@ namespace FPS_Game
                 case GamePointView gamePoint:
                     {
                         var gamePointModel = new GamePointModel(gamePoint);
-                        gamePointModel.AddPoint += AddPoints;
+                        gamePointModel.AddPoint += _playerModel.GetPoints;
 
                         interact = gamePointModel;
                         break;
@@ -162,22 +164,11 @@ namespace FPS_Game
             return interact;
         }
 
-        private void AddPoints(float value)
-        {
-            _gameScore += value;
-            _scoreManager.AddPoints(_gameScore);
-            /*if(_gameScore >= _gameGoal) 
-            {
-                _gameOverManager.GameOver(true);
-                GameOver(true);
-            } */
-        }
-
         private GameData SaveGameData()
         {
             var gameData = new GameData();
 
-            gameData.gameScore = _gameScore;
+            gameData.gameScore = _playerModel.CurrentPoints;
 
             gameData.playerTransformData = new SaveObjectData
             {
@@ -212,7 +203,7 @@ namespace FPS_Game
 
         private void LoadGameData(GameData data)
         {
-            _gameScore = data.gameScore;
+            _playerModel.CurrentPoints = data.gameScore;
             _scoreManager.AddPoints(_gameScore);
 
             _playerView.LoadData(data.playerTransformData.position, data.playerTransformData.rotation);
@@ -251,10 +242,7 @@ namespace FPS_Game
 
         private void InitExecuteObjects()
         {
-            _executeUpdate = new ListExecuteController();
-            _executeLateUpdate = new ListExecuteController();
-
-            _playerController = new PlayerController(_playerModel, inputSystem);
+            _playerController = new PlayerController(_playerModel, inputSystem, _scoreManager.AddPoints);
             _executeUpdate.AddExecuteObject(_playerController);
 
             _cameraController = new CameraController(_playerView.Transform, _camera.transform, inputSystem, (_playerView.XSensitivity, _playerView.YSensitivity));
