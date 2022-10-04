@@ -3,18 +3,19 @@ using UnityEngine;
 
 namespace FPS_Game.MVC
 {
-    public class BonusModel : AbstractPickUpItemModel
+    public class BonusModel : AbstractPickUpItemModel, IBonus
     { 
         private float _bonusValue;
         private Sprite _icon;
         private float _activeTime;
 
         public float BonusValue { get => _bonusValue; set => _bonusValue = value; }
-        public Sprite Icon { get => _icon; set => _icon = value; }
         public float ActiveTime { get => _activeTime; set => _activeTime = value; }
 
+        public Sprite Icon { get => _icon; set => _icon = value; }
         public BonusType Type { get; private set; }
-        public event Action<BonusModel> AddBonus = delegate (BonusModel bonus) { };
+
+        public Action<BonusModel> AddBonus { get; set; } = delegate (BonusModel bonus) { };
 
         public BonusModel(BonusView view) : base(view) 
         {
