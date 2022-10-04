@@ -16,13 +16,11 @@ namespace FPS_Game
         [SerializeField] private float _gameGoal = 500;
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private InteractView[] itemViews;
+        [SerializeField] private BaseEnemyView[] _enemyViews;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Image _healthBar;
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private WeaponView _weaponView;
-
-        [Header("In Test")]
-        [SerializeField] private BaseEnemyView[] _enemyViews;
 
         private PlayerModel _playerModel;
         private Camera _camera;

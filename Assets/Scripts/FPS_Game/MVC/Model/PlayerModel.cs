@@ -14,12 +14,10 @@ namespace FPS_Game.MVC
         private bool _isOnGround;
         private float _prevSpeed;
 
-
         public float Gravity { get => _gravity; private set => _gravity = value; }
         public float JumpHeight { get => _jumpHeight; private set => _jumpHeight = value; }
 
         public event Action<bool> GameOver = delegate (bool state) { };
-
 
         public PlayerModel(PlayerView view) 
         {
